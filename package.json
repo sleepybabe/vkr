@@ -1,0 +1,14 @@
+{
+  "name": "vkr",
+  "version": "1.0.0",
+  "description": "Разработка автоматической системы проверки лабораторных работ по курсу \"Веб-технологии\"",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Khovrus Alice",
+  "license": "ISC"
+}
