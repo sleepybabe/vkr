@@ -1,0 +1,16 @@
+{
+	"name":  "Extension", 
+	"version": "1.0", 
+    "manifest_version": 3,
+    
+    "action": {
+        "default_popup":"popup.html"
+    },
+
+    "permissions": ["scripting", "activeTab", "tabs"],
+    
+    "background": {
+        "service_worker": "background.js"
+    }
+}
+  
