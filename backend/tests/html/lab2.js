@@ -66,7 +66,7 @@ function checkSub4Criterion1(){
 }
 
 function checkSub5Criterion1(){
-    const xpath = `//input[@type="radio" and not (@name=preceding::input[@type="radio"]/@name)]`;
+    const xpath = `//form//input[@type="radio" and not (@name=preceding::input[@type="radio"]/@name)]`;
     if (getXPathResult(xpath) < 2)
         return "Нет двух групп радио кнопок"
 }

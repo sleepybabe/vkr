@@ -19,7 +19,11 @@ module.exports = (sequelize, Sequelize) => {
             code: {
                 type: Sequelize.STRING(500),
                 allowNull: false
-            }
+            },
+            comment: {
+                type: Sequelize.STRING(200),
+                allowNull: false
+            },
             
         });
 
