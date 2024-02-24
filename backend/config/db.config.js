@@ -18,7 +18,7 @@ var sequelize = new Sequelize(
     {
         host: dbProperties.host,
         dialect: dbProperties.dialect,
-        operatorsAliases: false,
+        operatorsAliases: 0,
         pool: {
             max: dbProperties.max,
             min: dbProperties.pool.min,
