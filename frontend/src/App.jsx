@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Header from './layout/Header'
 import FormCreation from './pages/FormCreation'
+import CriteriaList from './pages/CriteriaList';
 // import LabData from './pages/LabData'
 // import Labs from './pages/Labs'
 
@@ -15,8 +16,8 @@ class App extends React.Component {
                     <Header />
                     <Routes>
                         <Route path="/" element={<FormCreation/>}/>
-                        {/* <Route path="/labs" element={<Labs/>}/>
-                        <Route path="/labs/:id" element={<LabData/>} /> */}
+                        <Route path="/criteria" element={<CriteriaList/>}/>
+                        {/* <Route path="/labs/:id" element={<LabData/>} />  */}
                     </Routes>
                 </BrowserRouter>
             </div>

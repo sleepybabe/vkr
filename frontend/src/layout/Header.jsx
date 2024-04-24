@@ -1,5 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
 
 class Header extends React.Component {
 
@@ -9,9 +12,16 @@ class Header extends React.Component {
 
     render() {
         return (
-            <nav className="navbar navbar-project navbar-expand-lg navbar-light" style={{ background: 'black' }}>
-                <Link sx={{ ":hover":{bgcolor: "#1D1F1F"}}} style={{ marginLeft:'15px', color: 'white', fontWeight: 800 }} className="navbar-brand" to="/">Создать расширение</Link>
-            </nav>
+            <AppBar position="static" sx={{ background: '#4b71bb', height: 'auto'}}>
+            <MenuList sx={{ display: 'flex', flexDirection: 'row' }}>
+                <MenuItem sx={{ width: 'auto', ml: 1 }}>
+                    <Link to="/" style={{ textDecoration: 'none', color: 'white', fontWeight: 700 }}>Создать расширение</Link>
+                </MenuItem>
+                <MenuItem sx={{ width: 'auto' }}>
+                    <Link to="/criteria" style={{ textDecoration: 'none', color: 'white', fontWeight: 700 }}>Критерии</Link>
+                </MenuItem>
+            </MenuList>
+    </AppBar>
         );
     }
 }
