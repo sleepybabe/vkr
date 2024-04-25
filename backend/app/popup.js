@@ -9,6 +9,7 @@ window.addEventListener('DOMContentLoaded', function() {
         const labModule = selectedValues[1];
         const selectVariant = document.getElementById("selectVariant");
         
+        //для варианта (пока не сделано)
         if (selectVariant.style.display == "block"){
             const selectedVariant = selectVariant.options[selectVariant.selectedIndex].value
             chrome.runtime.sendMessage({ action: "getCriterionById", id: selectedVariant });
@@ -17,6 +18,7 @@ window.addEventListener('DOMContentLoaded', function() {
         chrome.runtime.sendMessage({ action: "executeScript", id: id, labModule: labModule});
     });
 
+    //пока не сделано
     document.getElementById("addVariant").addEventListener("click", function() {
         const select = document.getElementById("selectScript");
         const selectedValues = select.options[select.selectedIndex].value;
@@ -24,6 +26,39 @@ window.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+//динамическое создание вариантов для селекта
+window.addEventListener('DOMContentLoaded', function() {
+
+    const selectElement = document.getElementById('selectScript');
+    const directories = ['HTML', 'CSS', 'JS'];
+
+    // FileSystem API для доступа к директориям расширения
+    chrome.runtime.getPackageDirectoryEntry((root) => {
+        directories.forEach((dirPath) => {
+            root.getDirectory(`tests/${dirPath}`, {}, (dir) => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = dirPath;
+                const reader = dir.createReader();
+                reader.readEntries((files) => {
+                    files.forEach((file) => {
+                        if (file.isFile) {
+                            const fileName = file.name;
+                            const labNumberMatch = fileName.match(/\d+/);
+                            if (labNumberMatch) {
+                                const labNumber = labNumberMatch[0];
+                                const option = document.createElement('option');
+                                option.value = `${labNumber}_${dirPath}`;
+                                option.textContent = `lab${labNumber}`;
+                                optgroup.appendChild(option);
+                            }
+                        }
+                    });
+                    selectElement.appendChild(optgroup);
+                });
+            });
+        });
+    });
+});
 
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
