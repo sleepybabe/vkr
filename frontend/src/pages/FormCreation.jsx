@@ -447,7 +447,7 @@ class FormCreation extends React.Component {
       return;
     }
 
-    let procentSum = 0;
+    var procentSum = 0;
 
     for (const criterion of criteriaData) {
         if (criterion.procent <= 0) {
