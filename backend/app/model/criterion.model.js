@@ -9,19 +9,19 @@ module.exports = (sequelize, Sequelize) => {
                 allowNull: false
             },
             name: {
-                type: Sequelize.STRING(100),
+                type: Sequelize.STRING(300),
                 allowNull: false
             },
             description: {
-                type: Sequelize.STRING(250),
+                type: Sequelize.STRING(5000),
                 allowNull: false
             },
             code: {
-                type: Sequelize.STRING(500),
+                type: Sequelize.TEXT('medium'),
                 allowNull: false
             },
             comment: {
-                type: Sequelize.STRING(200),
+                type: Sequelize.STRING(5000),
                 allowNull: false
             },
             

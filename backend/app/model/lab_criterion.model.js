@@ -23,6 +23,11 @@ module.exports = (sequelize, Sequelize) => {
             procent: {
                 type: Sequelize.FLOAT(10),
                 allowNull: false
+            },
+            variant: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+                defaultValue: 0
             }
         });
 

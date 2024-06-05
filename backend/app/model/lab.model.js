@@ -13,11 +13,11 @@ module.exports = (sequelize, Sequelize) => {
                 allowNull: false
             },
             module: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.STRING(250),
                 allowNull: false
             },
             name: {
-                type: Sequelize.STRING(100),
+                type: Sequelize.STRING(500),
                 allowNull: false
             }
         });
