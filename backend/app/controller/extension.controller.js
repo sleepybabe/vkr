@@ -85,11 +85,13 @@ exports.download = (req, res) => {
             const pathManifest = path.join(dir, 'manifest.json');
             const pathPopupHtml = path.join(dir, 'popup.html');
             const pathPopupJs = path.join(dir, 'popup.js');
+            const pathOverride = path.join(dir, 'override.js');
 
             archive.append(fs.createReadStream(pathBackground), {name: `background.js`});
             archive.append(fs.createReadStream(pathManifest), {name: `manifest.json`});
             archive.append(fs.createReadStream(pathPopupHtml), {name: `popup.html`});
             archive.append(fs.createReadStream(pathPopupJs), {name: `popup.js`});
+            archive.append(fs.createReadStream(pathOverride), {name: `override.js`});
 
             archive.finalize();
         })

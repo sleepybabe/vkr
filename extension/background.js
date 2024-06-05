@@ -81,7 +81,7 @@ function executePageScript(file) {
     });
 }
 
-// Обработчик для отслеживания открытия окна расширения
+// обработчик для отслеживания открытия окна расширения
 chrome.runtime.onConnect.addListener((port) => {
     if (port.name === 'popup-open') {
         executePageScript('override.js');
