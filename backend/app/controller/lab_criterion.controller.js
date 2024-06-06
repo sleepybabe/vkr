@@ -5,7 +5,7 @@ exports.getCriteriaForLab = (req, res) => {
     const lab_id = req.params.id;
 
     db.sequelize.query(
-        `SELECT lab_criterion.id, lab_criterion.criterion_id, criterion.name, criterion.description, lab_criterion.index_number, lab_criterion.procent FROM lab_criterion
+        `SELECT lab_criterion.id, lab_criterion.criterion_id, criterion.name, criterion.description, lab_criterion.index_number, lab_criterion.procent, lab_criterion.variant FROM lab_criterion
         JOIN criterion ON lab_criterion.criterion_id = criterion.id
         WHERE lab_criterion.lab_id = ?
         ORDER BY lab_criterion.index_number`,
@@ -26,7 +26,8 @@ exports.getCriteriaForLab = (req, res) => {
 exports.updateLabCriterion = (req, res) => {
     db.lab_criterion.update({
         procent: req.body.procent,
-        index_number: req.body.index_number
+        index_number: req.body.index_number,
+        variant: req.body.variant
         },
         {
             where: {

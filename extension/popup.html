@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>check</title>
+        <title>Расширение "Проверка лабораторных работ"</title>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="popup.css">
+        <script src="popup.js"></script>
     </head>
     <body>
-        <script src="popup.js"></script>
-        <h1>check</h1>
-        <select id="selectScript">
-
-        </select>
-        <select id="selectVariant" style="display: none;" ></select>
-        <button id="check">check</button>
-        <button id="addVariant">add variant</button>
-        <p id="error"></p>
-        <p style="width: 370px;" id="result"></p>
+        <div class="container">
+            <h1>Проверка лабораторных работ</h1>
+            <div class="flexbox-container"
+                <label for="selectScript">Выберите лабораторную работу:</label>
+                <select id="selectScript" class="custom-select"></select>
+                <label for="selectVariant">Выберите вариант:</label>
+                <select id="selectVariant" class="custom-select"></select>
+                <button id="check" class="btn">Проверить</button>
+            </div>
+            <p id="error" class="error"></p>
+            <ul id="result" class="result"></ul>
+        </div>
     </body>
 </html>

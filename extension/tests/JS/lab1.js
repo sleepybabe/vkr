@@ -104,4 +104,8 @@ async function checkCriteria(...functions){
     }
     chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
 }
-checkCriteria(checkCriterion1, checkCriterion2, checkCriterion3)
+checkCriteria(
+    checkCriterion1,
+    checkCriterion2,
+    checkCriterion3
+);

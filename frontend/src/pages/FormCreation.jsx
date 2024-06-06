@@ -198,30 +198,37 @@ class FormCreation extends React.Component {
     this.setState({
       invalidUpdateInput: false
     });
-    var { value } = event.target;
-
-    value = parseFloat(value);
-
-    if (isNaN(value)) {
+  
+    const { type, checked } = event.target;
+    var value = null;
+  
+    if (type === 'checkbox') {
+      value = checked ? 1 : 0;
+    } 
+    else {
+      value = parseFloat(event.target.value);
+      if (isNaN(value)) {
         value = '';
+      }
     }
-
+  
     this.setState(prevState => {
-        const updatedCriteria = prevState.criteriaForLab[lab.id].map(criterion => {
-            if (criterion.id === criterionId) {
-                return {
-                    ...criterion,
-                    [field]: value
-                };
-            }
-            return criterion;
-        });
-        return {
-            criteriaForLab: {
-                ...prevState.criteriaForLab,
-                [lab.id]: updatedCriteria
-            }
-        };
+      const updatedCriteria = prevState.criteriaForLab[lab.id].map(criterion => {
+        if (criterion.id === criterionId || (field !== 'variant' && criterion.variant === 1 && prevState.criteriaForLab[lab.id].find(c => c.id === criterionId).variant === 1)) {
+          return {
+            ...criterion,
+            [field]: value
+          };
+        }
+        return criterion;
+      });
+  
+      return {
+        criteriaForLab: {
+          ...prevState.criteriaForLab,
+          [lab.id]: updatedCriteria
+        }
+      };
     });
   };
 
@@ -460,7 +467,7 @@ class FormCreation extends React.Component {
         procentSum += criterion.procent;
     }
 
-    if (procentSum !== 100) {
+    if (Math.round(procentSum) !== 100) {
         this.setState({
           invalidUpdateInput: `Общий процент за выполнение не равен 100
            (текущий процент: ${procentSum}). Обновление не было выполнено.`
@@ -469,13 +476,13 @@ class FormCreation extends React.Component {
     }
 
     const updatePromises = criteriaData.map(criterion => {
-        const { id, index_number, procent } = criterion;
-        return http.post(`/api/updateLabCriterion/${id}`, { index_number, procent })
+        const { id, index_number, procent, variant } = criterion;
+        return http.post(`/api/updateLabCriterion/${id}`, { index_number, procent, variant})
             .then(response => {
                 return response.data;
             })
             .catch(error => {
-                console.error(`Error updating criterion ${id}:`, error);
+                console.error(`Ошибка в обновлении критериев лабораторных работ ${id}:`, error);
             });
     });
 
@@ -633,6 +640,18 @@ class FormCreation extends React.Component {
                           <Box sx={{ display: 'flex', flex: '0 1 calc(50% - 10px)', flexDirection: 'column', width: '100%'}}>
                             <Button
                               sx={{ backgroundColor: '#5f8ce7', fontWeight: '700',
+                              height: '50%',  mb: 2, mr: 2, ":disabled": { backgroundColor: '#eaf1ff' } }}
+                              type='submit'
+                              variant='contained'
+                              color='primary'
+                              disabled={this.state.selectedCriteria.length === 0}
+                              onClick={this.handleSubmitCriteria(lab.id)}
+                            >
+                              Обновить критерии
+                            </Button>
+                              
+                            <Button
+                              sx={{ backgroundColor: '#5f8ce7', fontWeight: '700',
                                  height: '50%',  mb: 2, mr: 2 }}
                               type='submit'
                               variant='contained'
@@ -641,18 +660,6 @@ class FormCreation extends React.Component {
                             >
                               Обновить таблицу
                             </Button>
-
-                            <Button
-                                sx={{ backgroundColor: '#5f8ce7', fontWeight: '700',
-                                height: '50%',  mb: 2, mr: 2, ":disabled": { backgroundColor: '#eaf1ff' } }}
-                                type='submit'
-                                variant='contained'
-                                color='primary'
-                                disabled={this.state.selectedCriteria.length === 0}
-                                onClick={this.handleSubmitCriteria(lab.id)}
-                              >
-                                Обновить критерии
-                              </Button>
                           </Box>
 
                           <FormControl sx={{display: 'flex', flex: '0 1 calc(50% - 10px)', flexDirection: 'column', width: '100%'}}>
@@ -696,6 +703,7 @@ class FormCreation extends React.Component {
                                 <TableCell align="left">Описание</TableCell>
                                 <TableCell align="left">Процент за выполнение</TableCell>
                                 <TableCell align="left">Порядок критерия</TableCell>
+                                <TableCell align="left">Вариант</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody  sx={{ boxShadow: '0 1px 1px rgba(0, 0, 0, 0.1)' }}>
@@ -709,28 +717,38 @@ class FormCreation extends React.Component {
                                     {criterion.name}
                                   </TableCell>
                                   <TableCell align="left">{criterion.description}</TableCell>
-                                    <TableCell align="left">
-                                      <FormControl>
-                                        <Input
-                                          id="lab-percent"
-                                          label="Процент"
-                                          type='number'
-                                          value={criterion.procent}
-                                          onChange={event => this.handleChangeInputForCriteria(event, 'procent', criterion.id, lab)}
-                                        />
-                                      </FormControl>
-                                    </TableCell>
-                                    <TableCell align="left">
-                                      <FormControl>
-                                        <Input
-                                          id="lab-index"
-                                          label="Порядок"
-                                          type='number'
-                                          value={criterion.index_number}
-                                          onChange={event => this.handleChangeInputForCriteria(event, 'index_number', criterion.id, lab)}
-                                        />
-                                      </FormControl>
-                                    </TableCell>
+                                  <TableCell align="left">
+                                    <FormControl>
+                                      <Input
+                                        id="lab-percent"
+                                        label="Процент"
+                                        type='number'
+                                        value={criterion.procent}
+                                        onChange={event => this.handleChangeInputForCriteria(event, 'procent', criterion.id, lab)}
+                                      />
+                                    </FormControl>
+                                  </TableCell>
+                                  <TableCell align="left">
+                                    <FormControl>
+                                      <Input
+                                        id="lab-index"
+                                        label="Порядок"
+                                        type='number'
+                                        value={criterion.index_number}
+                                        onChange={event => this.handleChangeInputForCriteria(event, 'index_number', criterion.id, lab)}
+                                      />
+                                    </FormControl>
+                                  </TableCell>
+                                  <TableCell align="left">
+                                    <FormControl>
+                                      <Checkbox
+                                        id="lab-variant"
+                                        label="Вариант"
+                                        checked={!!criterion.variant}
+                                        onChange={event => this.handleChangeInputForCriteria(event, 'variant', criterion.id, lab)}
+                                      />
+                                    </FormControl>
+                                  </TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>

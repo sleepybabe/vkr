@@ -1,4 +1,4 @@
-function checkCriterion1() {
+async function checkCriterion1() {
     const rectangles = document.querySelectorAll('div.rectangle');
     const rectangleArea = getXPathResult(`//div[@id = 'rectanglearea']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = true;
@@ -16,16 +16,12 @@ function checkCriterion1() {
     else isCorrect = false;
 
     if (!isCorrect)
-        return '1 задание: не выполнено. Прямоугольники не были добавлены на страницу в контейнер.';
+        return ['1 задание: не выполнено.', 'Прямоугольники не были добавлены на страницу в контейнер.'];
     else 
-        return '1 задание: выполнено.';
+        return ['1 задание: выполнено.', 'Процент:', 20];
 }
 
-function checkCriterion2() {
-    return checkCriterion2Result();
-}
-
-async function checkCriterion2Result() {
+async function checkCriterion2() {
     const rectangles = document.querySelectorAll('div.rectangle');
     const startButton = getXPathResult(`//button[@id = 'start']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = true;
@@ -79,105 +75,79 @@ async function checkCriterion2Result() {
     }
     else isCorrect = false;
     if (!isCorrect)
-        return '2 задание: не выполнено. При нажатии кнопки "Пуск!" каждый прямоугольник не изменяет свой цвет случайным образом 1 раз каждую секунду.';
+        return ['2 задание: не выполнено.', 'При нажатии кнопки "Пуск!" каждый прямоугольник не изменяет свой цвет случайным образом 1 раз каждую секунду.'];
     else 
-        return '2 задание: выполнено.';
+        return ['2 задание: выполнено.', 'Процент:', 20];
 }
 
-function checkCriterion3() {
-    return checkCriterion3Result();
-}
+// async function checkCriterion3() {
+//     const rectangles = document.querySelectorAll('div.rectangle');
+//     const startButton = getXPathResult(`//button[@id = 'start']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
+//     var isCorrect = true;
 
-async function checkCriterion3Result() {
-    const rectangles = document.querySelectorAll('div.rectangle');
-    const startButton = getXPathResult(`//button[@id = 'start']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-    var isCorrect = true;
+//     if (rectangles.length !== 0 && startButton) {
+//         startButton.click();
+//         const intervalId = setInterval(() => {});
+//         if (!startButton.disabled)
+//             isCorrect = false;
+//         clearInterval(intervalId, true);
+//         startButton.disabled = false;
+//     }
+//     else isCorrect = false;
+//     if (!isCorrect)
+//         return '3 задание: не выполнено. Кнопка "Пуск!" реагирует на повторные нажатия.';
+//     else 
+//         return '3 задание: выполнено.';
+// }
 
-    if (rectangles.length !== 0 && startButton) {
-        startButton.click();
-        const intervalId = setInterval(() => {});
-        if (!startButton.disabled)
-            isCorrect = false;
-        clearInterval(intervalId, true);
-        startButton.disabled = false;
-    }
-    else isCorrect = false;
-    if (!isCorrect)
-        return '3 задание: не выполнено. Кнопка "Пуск!" реагирует на повторные нажатия.';
-    else 
-        return '3 задание: выполнено.';
-}
+// async function checkCriterion4() {
+//     const rectangles = document.querySelectorAll('div.rectangle');
+//     const startButton = getXPathResult(`//button[@id = 'start']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
+//     const stopButton = getXPathResult(`//button[@id = 'stop']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
+//     var isCorrect = true;
 
-function checkCriterion4() {
-    return checkCriterion4Result();
-}
+//     if (rectangles.length !== 0 && startButton && stopButton) {
+//         startButton.click();
+//         await new Promise((resolve) => setTimeout(resolve, 1000));
+//         const colorBeforeStop = rectangles[0].style.backgroundColor;
+//         stopButton.click();
+//         await new Promise((resolve) => setTimeout(resolve, 1200));
+//         const colorAfterStop = rectangles[0].style.backgroundColor;
+//         if (colorBeforeStop !== colorAfterStop) {
+//             isCorrect = false;
+//             const intervalId = setInterval(() => {});
+//             clearInterval(intervalId, true);
+//             startButton.disabled = false;
+//         } 
+//     }
+//     else isCorrect = false;
+//     if (!isCorrect)
+//         return '4 задание: не выполнено. При нажатии кнопки "Стоп" смена цветов не прекратилась.';
+//     else 
+//         return '4 задание: выполнено.';
+// }
 
-async function checkCriterion4Result() {
-    const rectangles = document.querySelectorAll('div.rectangle');
-    const startButton = getXPathResult(`//button[@id = 'start']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-    const stopButton = getXPathResult(`//button[@id = 'stop']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-    var isCorrect = true;
+// async function checkCriterion5() {
+//     const rectangles = document.querySelectorAll('div.rectangle');
+//     var isCorrect = true;
 
-    if (rectangles.length !== 0 && startButton && stopButton) {
-        startButton.click();
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        const colorBeforeStop = rectangles[0].style.backgroundColor;
-        stopButton.click();
-        await new Promise((resolve) => setTimeout(resolve, 1200));
-        const colorAfterStop = rectangles[0].style.backgroundColor;
-        if (colorBeforeStop !== colorAfterStop) {
-            isCorrect = false;
-            const intervalId = setInterval(() => {});
-            clearInterval(intervalId, true);
-            startButton.disabled = false;
-        } 
-    }
-    else isCorrect = false;
-    if (!isCorrect)
-        return '4 задание: не выполнено. При нажатии кнопки "Стоп" смена цветов не прекратилась.';
-    else 
-        return '4 задание: выполнено.';
-}
+//     if (rectangles.length !== 0) {
+//         const lengthBefore = rectangles.length;
+//         const clickedRectangle = rectangles[0];
+//         clickedRectangle.click();
+//         const lengthAfter = document.querySelectorAll('div.rectangle').length;
+//         if ((lengthAfter !== lengthBefore - 1) || document.body.contains(clickedRectangle))
+//             isCorrect = false;
+//     }
+//     else isCorrect = false;
+//     if (!isCorrect)
+//         return '5 задание: не выполнено. Прямоугольник не удаляется при клике по нему.';
+//     else 
+//         return '5 задание: выполнено.';
+// }
 
-function checkCriterion5() {
-    const rectangles = document.querySelectorAll('div.rectangle');
-    var isCorrect = true;
-
-    if (rectangles.length !== 0) {
-        const lengthBefore = rectangles.length;
-        const clickedRectangle = rectangles[0];
-        clickedRectangle.click();
-        const lengthAfter = document.querySelectorAll('div.rectangle').length;
-        if ((lengthAfter !== lengthBefore - 1) || document.body.contains(clickedRectangle))
-            isCorrect = false;
-    }
-    else isCorrect = false;
-    if (!isCorrect)
-        return '5 задание: не выполнено. Прямоугольник не удаляется при клике по нему.';
-    else 
-        return '5 задание: выполнено.';
-}
-
-function checkCriterion6() {
-    const rectangles = document.querySelectorAll('div.rectangle');
-    const rectangleArea = getXPathResult(`//div[@id = 'rectanglearea']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-    var isCorrect = false;
-
-    if (rectangles.length !== 0)
-        isCorrect = true;
-    if (isCorrect && rectangleArea) {
-        const rect = rectangles[0];
-        rect.dispatchEvent(new Event('mouseover'));
-        if (rect.style.backgroundColor !== 'red')
-            isCorrect = false;
-        rect.dispatchEvent(new Event('mouseout'));
-        if (rect.style.backgroundColor !== 'white')
-            isCorrect = false;
-    }
-    if (!isCorrect)
-        return '6 задание: не выполнено. Прямоугольник не стал красным при наведении курсора мыши или белым при "уходе".';
-    else 
-        return '6 задание: выполнено.';
+async function checkCriterion6() {
+    return checkVariantCriterion();
 }
 
 function getXPathResult(xpath, XPathResult){
@@ -198,4 +168,11 @@ async function checkCriteria(...functions){
     }
     chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
 }
-checkCriteria(checkCriterion1, checkCriterion2, checkCriterion3, checkCriterion4, checkCriterion5, checkCriterion6)
+checkCriteria(
+    checkCriterion1,
+    checkCriterion2,
+    // checkCriterion3, 
+    // checkCriterion4,
+    // checkCriterion5,
+    checkCriterion6
+);

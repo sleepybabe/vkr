@@ -182,7 +182,13 @@ class CriteriaList extends React.Component {
           margin="normal"
         />
 
-        <Button variant="contained" color="primary" onClick={this.handleAdd}>
+        <Button  
+          sx={{ backgroundColor: '#5f8ce7', fontWeight: '700',
+            height: '50%',  mb: 2, mr: 2 }}
+          type='submit'
+          variant='contained'
+          color='primary'
+          onClick={this.handleAdd}>
           Добавить критерий
         </Button>
 
@@ -213,6 +219,7 @@ class CriteriaList extends React.Component {
               value={newCriterionCode}
               onChange={this.handleInputChange}
               fullWidth
+              multiline
               margin="normal"
             />
             <TextField
@@ -223,7 +230,13 @@ class CriteriaList extends React.Component {
               fullWidth
               margin="normal"
             />
-            <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>
+            <Button 
+              sx={{ backgroundColor: '#5f8ce7', fontWeight: '700',
+                height: '50%',  mb: 2, mr: 2 }}
+              type='submit'
+              variant='contained'
+              color='primary'
+              onClick={this.handleFormSubmit}>
               Сохранить
             </Button>
           </Box>
