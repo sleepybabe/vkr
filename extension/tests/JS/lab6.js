@@ -16,9 +16,9 @@ async function checkCriterion1() {
     else isCorrect = false;
 
     if (!isCorrect)
-        return ['1 задание: не выполнено.', 'Прямоугольники не были добавлены на страницу в контейнер.'];
+        return ['1 задание (прямоугольники в контейнер): не выполнено.', 'Прямоугольники не были добавлены на страницу в контейнер.'];
     else 
-        return ['1 задание: выполнено.', 'Процент:', 20];
+        return ['1 задание (прямоугольники в контейнер): выполнено.', 'Процент:', 15];
 }
 
 async function checkCriterion2() {
@@ -75,76 +75,76 @@ async function checkCriterion2() {
     }
     else isCorrect = false;
     if (!isCorrect)
-        return ['2 задание: не выполнено.', 'При нажатии кнопки "Пуск!" каждый прямоугольник не изменяет свой цвет случайным образом 1 раз каждую секунду.'];
+        return ['2 задание (кнопка "Пуск!" с запуском изменения цвета прямоугольников 1 раз в секунду): не выполнено.', 'При нажатии кнопки "Пуск!" каждый прямоугольник не изменяет свой цвет случайным образом 1 раз каждую секунду.'];
     else 
-        return ['2 задание: выполнено.', 'Процент:', 20];
+        return ['2 задание (кнопка "Пуск!" с запуском изменения цвета прямоугольников 1 раз в секунду): выполнено.', 'Процент:', 15];
 }
 
-// async function checkCriterion3() {
-//     const rectangles = document.querySelectorAll('div.rectangle');
-//     const startButton = getXPathResult(`//button[@id = 'start']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-//     var isCorrect = true;
+async function checkCriterion3() {
+    const rectangles = document.querySelectorAll('div.rectangle');
+    const startButton = getXPathResult(`//button[@id = 'start']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
+    var isCorrect = true;
 
-//     if (rectangles.length !== 0 && startButton) {
-//         startButton.click();
-//         const intervalId = setInterval(() => {});
-//         if (!startButton.disabled)
-//             isCorrect = false;
-//         clearInterval(intervalId, true);
-//         startButton.disabled = false;
-//     }
-//     else isCorrect = false;
-//     if (!isCorrect)
-//         return '3 задание: не выполнено. Кнопка "Пуск!" реагирует на повторные нажатия.';
-//     else 
-//         return '3 задание: выполнено.';
-// }
+    if (rectangles.length !== 0 && startButton) {
+        startButton.click();
+        const intervalId = setInterval(() => {});
+        if (!startButton.disabled)
+            isCorrect = false;
+        clearInterval(intervalId, true);
+        startButton.disabled = false;
+    }
+    else isCorrect = false;
+    if (!isCorrect)
+        return ['3 задание (кнопка без повторного нажатия): не выполнено.', 'Кнопка "Пуск!" реагирует на повторные нажатия.'];
+    else 
+        return ['3 задание (кнопка без повторного нажатия): выполнено.', 'Процент:', 15];
+}
 
-// async function checkCriterion4() {
-//     const rectangles = document.querySelectorAll('div.rectangle');
-//     const startButton = getXPathResult(`//button[@id = 'start']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-//     const stopButton = getXPathResult(`//button[@id = 'stop']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-//     var isCorrect = true;
+async function checkCriterion4() {
+    const rectangles = document.querySelectorAll('div.rectangle');
+    const startButton = getXPathResult(`//button[@id = 'start']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
+    const stopButton = getXPathResult(`//button[@id = 'stop']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
+    var isCorrect = true;
 
-//     if (rectangles.length !== 0 && startButton && stopButton) {
-//         startButton.click();
-//         await new Promise((resolve) => setTimeout(resolve, 1000));
-//         const colorBeforeStop = rectangles[0].style.backgroundColor;
-//         stopButton.click();
-//         await new Promise((resolve) => setTimeout(resolve, 1200));
-//         const colorAfterStop = rectangles[0].style.backgroundColor;
-//         if (colorBeforeStop !== colorAfterStop) {
-//             isCorrect = false;
-//             const intervalId = setInterval(() => {});
-//             clearInterval(intervalId, true);
-//             startButton.disabled = false;
-//         } 
-//     }
-//     else isCorrect = false;
-//     if (!isCorrect)
-//         return '4 задание: не выполнено. При нажатии кнопки "Стоп" смена цветов не прекратилась.';
-//     else 
-//         return '4 задание: выполнено.';
-// }
+    if (rectangles.length !== 0 && startButton && stopButton) {
+        startButton.click();
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        const colorBeforeStop = rectangles[0].style.backgroundColor;
+        stopButton.click();
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+        const colorAfterStop = rectangles[0].style.backgroundColor;
+        if (colorBeforeStop !== colorAfterStop) {
+            isCorrect = false;
+            const intervalId = setInterval(() => {});
+            clearInterval(intervalId, true);
+            startButton.disabled = false;
+        } 
+    }
+    else isCorrect = false;
+    if (!isCorrect)
+        return ['4 задание (кнопка "Стоп" с остановкой изменения цветов): не выполнено.', 'При нажатии кнопки "Стоп" смена цветов не прекратилась.'];
+    else 
+        return ['4 задание (кнопка "Стоп" с остановкой изменения цветов): выполнено.', 'Процент:', 15];
+}
 
-// async function checkCriterion5() {
-//     const rectangles = document.querySelectorAll('div.rectangle');
-//     var isCorrect = true;
+async function checkCriterion5() {
+    const rectangles = document.querySelectorAll('div.rectangle');
+    var isCorrect = true;
 
-//     if (rectangles.length !== 0) {
-//         const lengthBefore = rectangles.length;
-//         const clickedRectangle = rectangles[0];
-//         clickedRectangle.click();
-//         const lengthAfter = document.querySelectorAll('div.rectangle').length;
-//         if ((lengthAfter !== lengthBefore - 1) || document.body.contains(clickedRectangle))
-//             isCorrect = false;
-//     }
-//     else isCorrect = false;
-//     if (!isCorrect)
-//         return '5 задание: не выполнено. Прямоугольник не удаляется при клике по нему.';
-//     else 
-//         return '5 задание: выполнено.';
-// }
+    if (rectangles.length !== 0) {
+        const lengthBefore = rectangles.length;
+        const clickedRectangle = rectangles[0];
+        clickedRectangle.click();
+        const lengthAfter = document.querySelectorAll('div.rectangle').length;
+        if ((lengthAfter !== lengthBefore - 1) || document.body.contains(clickedRectangle))
+            isCorrect = false;
+    }
+    else isCorrect = false;
+    if (!isCorrect)
+        return ['5 задание (удаление прямоугольника по клику): не выполнено.', 'Прямоугольник не удаляется при клике по нему.'];
+    else 
+        return ['5 задание (удаление прямоугольника по клику): выполнено.', 'Процент:', 15];
+}
 
 async function checkCriterion6() {
     return checkVariantCriterion();
@@ -171,8 +171,8 @@ async function checkCriteria(...functions){
 checkCriteria(
     checkCriterion1,
     checkCriterion2,
-    // checkCriterion3, 
-    // checkCriterion4,
-    // checkCriterion5,
+    checkCriterion3, 
+    checkCriterion4,
+    checkCriterion5,
     checkCriterion6
 );

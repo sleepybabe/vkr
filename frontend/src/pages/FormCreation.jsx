@@ -51,7 +51,8 @@ class FormCreation extends React.Component {
       expandedUpdate: false,
       invalidMessage: '',
       invalidUpdateInput: '',
-      availableCriteria: []
+      availableCriteria: [],
+      expandedDescriptionId: null
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -455,6 +456,7 @@ class FormCreation extends React.Component {
     }
 
     var procentSum = 0;
+    var variantAdded = false;
 
     for (const criterion of criteriaData) {
         if (criterion.procent <= 0) {
@@ -464,7 +466,14 @@ class FormCreation extends React.Component {
           });
           return;
         }
-        procentSum += criterion.procent;
+        if (criterion.variant === 1) {
+          if (!variantAdded) {
+            procentSum += criterion.procent;
+            variantAdded = true;
+          }
+        } else {
+          procentSum += criterion.procent;
+        }
     }
 
     if (Math.round(procentSum) !== 100) {
@@ -506,9 +515,15 @@ class FormCreation extends React.Component {
     return selectedCriteria.includes(criterionId);
   }
 
+  handleDescriptionClick = (id) => {
+    this.setState((prevState) => ({
+      expandedDescriptionId: prevState.expandedDescriptionId === id ? null : id
+    }));
+  }
+
   render() {
     const { selectedLabs, labs, selectAll,labsByModule, availableCriteria, selectAllCriteria,
-           expanded, criteriaForLab, expandedAddition, expandedUpdate, selectedCriteria} = this.state;
+           expanded, criteriaForLab, expandedAddition, expandedUpdate, selectedCriteria, expandedDescriptionId} = this.state;
     return (
       <Box key='original'>
         <Box key='select-box' sx={{ display: 'flex',  flexDirection: 'raw', m: 3}}>
@@ -720,7 +735,13 @@ class FormCreation extends React.Component {
                                   <TableCell component="th" scope="row">
                                     {criterion.name}
                                   </TableCell>
-                                  <TableCell align="left">{criterion.description}</TableCell>
+                                  <TableCell align="left" onClick={() => this.handleDescriptionClick(criterion.id)}>
+                                    {expandedDescriptionId === criterion.id ? (
+                                      <span>{criterion.description}</span>
+                                    ) : (
+                                      <span>{criterion.description.substring(0, 30) + (criterion.description.length > 30 ? '...' : '')}</span>
+                                    )}
+                                  </TableCell>
                                   <TableCell align="left">
                                     <FormControl>
                                       <Input
