@@ -501,6 +501,11 @@ class FormCreation extends React.Component {
         });
   };
 
+  isCriterionSelected(criterionId) {
+    const { selectedCriteria } = this.state;
+    return selectedCriteria.includes(criterionId);
+  }
+
   render() {
     const { selectedLabs, labs, selectAll,labsByModule, availableCriteria, selectAllCriteria,
            expanded, criteriaForLab, expandedAddition, expandedUpdate, selectedCriteria} = this.state;
@@ -684,12 +689,11 @@ class FormCreation extends React.Component {
                               </MenuItem>
 
                               {availableCriteria.length !== 0 && availableCriteria.map((criterion) => (
-                                  <MenuItem key={'item-criteria'+criterion.id} value={criterion.id}>
-                                    <Checkbox checked={selectedCriteria.includes(criterion.id)} />
-                                    <ListItemText primary={criterion.name} />
-                                  </MenuItem>
-                                ))}
-                              
+                                <MenuItem key={'item-criteria'+criterion.id} value={criterion.id}>
+                                  <Checkbox checked={this.isCriterionSelected(criterion.id)} /> {/* Изменяем здесь */}
+                                  <ListItemText primary={criterion.name} />
+                                </MenuItem>
+                              ))}
                             </Select>
                           </FormControl>
                         </Box>

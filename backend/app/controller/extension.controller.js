@@ -96,6 +96,7 @@ exports.download = (req, res) => {
                 { name: 'manifest.json', path: path.join(dir, 'manifest.json') },
                 { name: 'popup.html', path: path.join(dir, 'popup.html') },
                 { name: 'popup.js', path: path.join(dir, 'popup.js') },
+                { name: 'popup.css', path: path.join(dir, 'popup.css') },
                 { name: 'override.js', path: path.join(dir, 'override.js') }
             ];
 

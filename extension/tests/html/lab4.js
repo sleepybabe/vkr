@@ -1,9 +1,5 @@
 function checkCriterion1() {
-    // const xpath = `//ul[li[contains(text(), "")] and li[contains(text(), "")]
-        //  and li[contains(text(), "")]]/li/a[contains(@href, "data/")]`
     const xpath = `//li[contains(text(), "")]`;
-    // const xpath = `//ul[li[contains(text(), "Владимир Маяковский")] and li[contains(text(), "Николай Заболоцкий")]
-    //      and li[contains(text(), "Федор Тютчев")]]/li/a[contains(@href, "data/")]`
     const result = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     const xpathData = `//a[contains(@href, "data/")]`;
     const dataResult = getXPathResult(xpathData, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
@@ -23,11 +19,7 @@ function checkCriterion1() {
     else return 'задание 1: выполнено.';
 }
 
-function checkCriterion2(){
-    return checkCriterion2Result();
-}
-
-async function checkCriterion2Result() {
+async function checkCriterion2(){
     const xpath = `//a[contains(@href, "data/")]`;
     const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
     var isNotFound = false;
@@ -59,11 +51,7 @@ async function checkCriterion2Result() {
         return 'задание 2: выполнено.';
 }
 
-function checkCriterion3(){
-    return checkCriterion3Result();
-}
-
-async function checkCriterion3Result() {
+async function checkCriterion3(){
     const xpath = `//a[contains(@href, "data/")]`;
     const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
     var isNotFound = false;
@@ -91,11 +79,7 @@ async function checkCriterion3Result() {
         return 'задание 3: выполнено.';
 }
 
-function checkCriterion4(){
-    return checkCriterion4Result();
-}
-
-async function checkCriterion4Result() {
+async function checkCriterion4(){
     const xpath = `//a[contains(@href, "data/")]`;
     const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
     var isNotFound = false;
@@ -149,11 +133,7 @@ async function checkCriterion4Result() {
         return 'задание 4: выполнено.';
 }
 
-function checkCriterion5(){
-    return checkCriterion5Result();
-}
-
-async function checkCriterion5Result() {
+async function checkCriterion5(){
     const xpath = `//a[not(contains(@href, "data/"))]`;
     const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
     var isNotFound = false;
