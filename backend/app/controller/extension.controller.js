@@ -51,11 +51,11 @@ exports.download = (req, res) => {
 
                 const functionName = `checkCriterion${index}`;
                 var functionCode = '';
-                const codeInFunction = `{\n${result.code}\n\t\treturn ['${index} задание (${result.name}): не выполнено.', '${result.comment}']\n\telse\n\t\treturn ['${index} задание (${result.name}): выполнено', 'Процент:', '${result.procent}']\n}\n`
+                const codeInFunction = `{\n${result.code}\n\t\treturn ['${index} задание (${result.name}): не выполнено.', '${result.comment} (-${result.procent}%)']\n\telse\n\t\treturn ['${index} задание (${result.name}): выполнено.', '${result.procent}', '%',]\n}\n`
                 if (result.variant === 1) {
                     indexVariant++;
                     const variantFunctionName = `checkVariantCriterion${index}`;
-                    const variantFunctionCode = `function ${variantFunctionName}() ${codeInFunction}`;
+                    const variantFunctionCode = `async function ${variantFunctionName}() ${codeInFunction}`;
                     const variantFileName = `tests/${moduleLab}/variants/lab${labId}/variant${indexVariant}.js`;
                     functionCode = `async function ${functionName}() {\n\t${variantFunctionName}();\n}`;
                     const variantCode = `${variantFunctionCode}`;

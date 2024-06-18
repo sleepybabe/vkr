@@ -1,7 +1,9 @@
-function showDomic(listToDomic) {
+function showDomic(listToDomic, procent) {
     const commentArea = document.getElementById('comments');
-    if (commentArea) {
-        commentArea.innerHTML = listToDomic;
+    const procentInput = document.getElementById('learning-level');
+    if (commentArea && procentInput) {
+        commentArea.value = listToDomic;
+        procentInput.value = procent;
     }
 }
 
@@ -48,13 +50,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     if (request.action === "showListToDomic") {
         const listToDomic = request.listToDomic;
-        chrome.tabs.query({ url: 'https://domic.isu.ru/2//alex/file-checker.html' }, function(tabs) {
+        const procent = request.procent;
+        // chrome.tabs.query({ url: 'https://domic.isu.ru/2//alex/file-checker.html' }, function(tabs) {
+        chrome.tabs.query({ title: 'domic-2: Проверка файлов' }, function(tabs) {
             if (tabs.length > 0) {
                 const tabId = tabs[0].id;
                 chrome.scripting.executeScript({
                     target: { tabId: tabId },
                     func: showDomic,
-                    args: [listToDomic]
+                    args: [listToDomic, procent]
                 });
             }
         });

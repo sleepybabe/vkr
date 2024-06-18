@@ -1,8 +1,9 @@
 function checkCriterion1() {
 	const xpath = `//em[text()][not(preceding::em)]|//strong[text()][not(preceding::strong)]`;
-  if (getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotLength < 2)
+  	if (getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotLength < 2)
 		return "1 задание: не выполнено. Ошибка: не выделены отдельные словосочетания с помощью em и strong"
-	else return "1 задание: выполнено;"
+	else 
+		return "1 задание: выполнено;"
 }
 
 function checkCriterion2() {
@@ -35,9 +36,10 @@ function checkCriterion5() {
 
 function checkCriterion6() {
 	const xpath = `//comment()`;
-  if (getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotLength < 1)
+	if (getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotLength < 1)
 		return "6 задание: не выполнено. Ошибка: нет комментария на странице"
-	else return "6 задание: выполнено;"
+	else
+		return "6 задание: выполнено;"
 }
 
 function checkCriterion7() {

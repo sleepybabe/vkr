@@ -153,11 +153,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             request.arrayOfResults.forEach(result => {
                 const li = document.createElement("li");
                 if (result.length === 3) {
-                    li.textContent = `${result[0]} ${result[1]} ${result[2]}`;
-                    sumProcent += result[2];
+                    li.textContent = `${result[0]} ${result[1]}${result[2]}`;
+                    sumProcent += result[1];
                 }
                 else {
                     li.textContent = `${result[0]} ${result[1]}`;
+                    li.style.borderColor = 'red';
                     listToDomic += `<li>${result[1]}</li>\n`
                 }
                 resultElement.appendChild(li);
@@ -168,7 +169,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             resultElement.appendChild(liLast);
             if (listToDomic !== '<ul>\n') {
                 listToDomic += '</ul>'
-                chrome.runtime.sendMessage({ action: "showListToDomic", listToDomic: listToDomic});
+                chrome.runtime.sendMessage({ action: "showListToDomic", listToDomic: listToDomic, procent: sumProcent});
+            }
+            else {
+                chrome.runtime.sendMessage({ action: "showListToDomic", listToDomic: "", procent: sumProcent});
             }
         }
     }
