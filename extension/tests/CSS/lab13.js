@@ -1,22 +1,22 @@
-function checkCriterion1(){
+async function checkCriterion1() {
     const xpath = `//link[contains(@href, 'bootstrap.min.css')]`;
     const linkResult = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     if (linkResult.snapshotLength < 1)
-        return 'задание 1: не выполнено. Bootstrap не подключен.';
-    else 
-        return 'задание 1: выполнено.';
+		return ['1 задание (подключение Bootstrap): не выполнено.', 'Bootstrap не подключен. (-16%)']
+	else
+		return ['1 задание (подключение Bootstrap): выполнено.', '16', '%',]
 }
 
-function checkCriterion2(){
+async function checkCriterion2() {
     const xpath = `//meta[@name = 'viewport' and contains(@content, 'width=device-width') and contains(@content, 'initial-scale=1')]`;
     const linkResult = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     if (linkResult.snapshotLength < 1)
-        return 'задание 2: не выполнено. Не установлены значения параметров метатега viewport согласно требованиям Bootstrap.';
-    else 
-        return 'задание 2: выполнено.';
+		return ['2 задание (параметры метатега viewport): не выполнено.', 'Не установлены значения параметров метатега viewport согласно требованиям Bootstrap. (-16%)']
+	else
+		return ['2 задание (параметры метатега viewport): выполнено.', '16', '%',]
 }
 
-function checkCriterion3(){
+async function checkCriterion3() {
     const xpath = `//link[contains(@href, 'bootstrap.min.css')]`;
     const linkResult = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     const count = {
@@ -43,13 +43,12 @@ function checkCriterion3(){
             }
         }
     } 
-    if (count.form < 1 || count.table < 1)
-        return 'задание 3: не выполнено. Не добавлено меню навигации (navbar). Ссылки-якоря не установлены.';
-    else 
-        return 'задание 3: выполнено.';
+		return ['3 задание (меню навигации): не выполнено.', 'Не добавлено меню навигации (navbar). Ссылки-якоря не установлены. (-16%)']
+	else
+		return ['3 задание (меню навигации): выполнено.', '16', '%',]
 }
 
-function checkCriterion4(){
+async function checkCriterion4() {
     const xpath = `//link[contains(@href, 'bootstrap.min.css')]`;
     const linkResult = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var isCorrect = false;
@@ -60,12 +59,12 @@ function checkCriterion4(){
             isCorrect = true;
     }
     if (!isCorrect)
-        return 'задание 4: не выполнено. Не размещено предупреждение Bootstrap.';
-    else 
-        return 'задание 4: выполнено.';
+		return ['4 задание (предупреждение Bootstrap): не выполнено.', 'Не размещено предупреждение Bootstrap.Разместите хотя бы одно предупреждение Bootstrap на своей странице.  (-16%)']
+	else
+		return ['4 задание (предупреждение Bootstrap): выполнено.', '16', '%',]
 }
 
-function checkCriterion5(){
+async function checkCriterion5() {
     const xpath = `//link[contains(@href, 'bootstrap.min.css')]`;
     const linkResult = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var isCorrect = false;
@@ -80,12 +79,12 @@ function checkCriterion5(){
             isCorrect = true;
     }
     if (!isCorrect)
-        return 'задание 5: не выполнено. Стили для всех элементов заданы в форме.';
-    else 
-        return 'задание 5: выполнено.';
+		return ['5 задание (стили для всех элементов формы): не выполнено.', 'Стили для всех элементов не заданы в форме. (-16%)']
+	else
+		return ['5 задание (стили для всех элементов формы): выполнено.', '16', '%',]
 }
 
-function checkCriterion6(){
+async function checkCriterion6() {
     const xpath = `//link[contains(@href, 'bootstrap.min.css')]`;
     const linkResult = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var isCorrect = false;
@@ -100,12 +99,12 @@ function checkCriterion6(){
             isCorrect = true;
     }
     if (!isCorrect)
-        return 'задание 6: не выполнено. Не заданы группы ввода, обертки, дополнения флажков и радиокнопок, множественный ввод или custom select.';
-    else 
-        return 'задание 6: выполнено.';
+		return ['6 задание (стиль формы с группами ввода): не выполнено.', 'Не заданы группы ввода, обертки, дополнения флажков и радиокнопок, множественный ввод или custom select. (-16%)']
+	else
+		return ['6 задание (стиль формы с группами ввода): выполнено.', '16', '%',]
 }
 
-function checkCriterion7(){
+async function checkCriterion7() {
     const xpath = `//link[contains(@href, 'bootstrap.min.css')]`;
     const linkResult = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var isCorrect = false;
@@ -118,10 +117,11 @@ function checkCriterion7(){
             isCorrect = true;
     }
     if (!isCorrect)
-        return 'задание 7: не выполнено. Не задан стиль для таблицы, заголовок таблицы, разные цвета для четных и нечетных строк или подсветка строк.';
-    else 
-        return 'задание 7: выполнено.';
+		return ['7 задание (стиль для таблицы): не выполнено.', 'Не задан стиль для таблицы, заголовок таблицы, разные цвета для четных и нечетных строк или подсветка строк. (-4%)']
+	else
+		return ['7 задание (стиль для таблицы): выполнено.', '4', '%',]
 }
+
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -133,12 +133,22 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
-  }
-checkCriteria(checkCriterion1, checkCriterion2, checkCriterion3,checkCriterion4,checkCriterion5,checkCriterion6,checkCriterion7)
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
+}
+
+
+checkCriteria(
+	checkCriterion1,
+	checkCriterion2,
+	checkCriterion3,
+	checkCriterion4,
+	checkCriterion5,
+	checkCriterion6,
+	checkCriterion7
+);

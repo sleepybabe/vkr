@@ -1,12 +1,13 @@
-function checkCriterion1() {
+async function checkCriterion1() {
     const xpath = `//table/tbody/tr[td[1]/img and td[2]/iframe]`;
     
     if (getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotLength < 1)
-		return "1 задание: не выполнено. Отсутствуют изображение с картой и iframe."
-	else return "1 задание: выполнено."
+		return ['1 задание (изображение с картой и встройнный фрейм): не выполнено.', 'Отсутствуют изображение с картой и iframe. (-50%)']
+	else
+		return ['1 задание (изображение с картой и встройнный фрейм): выполнено.', '50', '%',]
 }
 
-function checkCriterion2() {
+async function checkCriterion2() {
     var isConnection = false;
     var isSameSize = false;
     const xpathImg = `//img`;
@@ -32,8 +33,9 @@ function checkCriterion2() {
     if (set.size === resultArea.snapshotLength && set.size >=3)
         isSameSize = true;
     if (!isConnection || !isSameSize)
-		return "2 задание: не выполнено. Не выделено на карте области для разных ссылок (не менее 3-х), каждый из документов по ссылке не открывается во встроенном фрейме iframe."
-	else return "2 задание: выполнено."
+		return ['2 задание (на карте области для ссылок): не выполнено.', 'Не выделено на карте области для разных ссылок (не менее 3-х), каждый из документов по ссылке не открывается во встроенном фрейме iframe. (-50%)']
+	else
+		return ['2 задание (на карте области для ссылок): выполнено.', '50', '%',]
 }
 
 
@@ -47,12 +49,17 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
-checkCriteria(checkCriterion1,checkCriterion2)
+
+
+checkCriteria(
+	checkCriterion1,
+	checkCriterion2
+);

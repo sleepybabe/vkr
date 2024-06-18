@@ -1,4 +1,4 @@
-function checkCriterion1() {
+async function checkVariantCriterion1() {
     const listOutside = getXPathResult(`//li[not(ancestor::li)]`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     const listInside = getXPathResult(`//ul[(ancestor::li)] | //ol[(ancestor::li)]`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     const body = getXPathResult(`//body`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
@@ -36,27 +36,7 @@ function checkCriterion1() {
             isCorrect = false;
     }
     if (!isCorrect)
-        return 'задание 1: не выполнено. Оформление списка не выполнено по варианту.';
-    else 
-        return 'задание 1: выполнено.';
+		return ['1 задание (оформление списка по варианту): не выполнено.', 'Оформление списка не выполнено по варианту. (-100%)']
+	else
+		return ['1 задание (оформление списка по варианту): выполнено.', '100', '%',]
 }
-
-function getXPathResult(xpath, XPathResult){
-    const evaluator = new XPathEvaluator();
-    const expression = evaluator.createExpression(xpath);
-    const result = expression.evaluate(
-        document,
-        XPathResult,
-    );
-    return result;
-}
-
-async function checkCriteria(...functions){
-    var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
-        const tmp = await functions[i]();
-        arrayOfResults.push(tmp);
-    }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
-}
-checkCriteria(checkCriterion1)

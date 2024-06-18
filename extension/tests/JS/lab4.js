@@ -1,8 +1,4 @@
-function checkCriterion1(){
-    return checkCriterion1Result()
-}
-
-async function checkCriterion1Result(){
+async function checkCriterion1() {
     const minInput = getXPathResult(`//input[@id = 'min']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const secInput = getXPathResult(`//input[@id = 'sec']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const startButton = getXPathResult(`//button[@id = 'go']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
@@ -43,16 +39,12 @@ async function checkCriterion1Result(){
     }
     else isCorrect = false;
     if (!isCorrect)
-        return '1 задание: не выполнено. Неправильно отображаются минуты и секунды обратного отсчета на странице.';
-    else 
-        return '1 задание: выполнено.';
+		return ['1 задание (отображение минут и секунд): не выполнено.', 'Неправильно отображаются минуты и секунды обратного отсчета на странице. (-11%)']
+	else
+		return ['1 задание (отображение минут и секунд): выполнено.', '11', '%',]
 }
 
-function checkCriterion2(){
-    return checkCriterion2Result()
-}
-
-async function checkCriterion2Result(){
+async function checkCriterion2() {
     const minInput = getXPathResult(`//input[@id = 'min']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const secInput = getXPathResult(`//input[@id = 'sec']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const startButton = getXPathResult(`//button[@id = 'go']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
@@ -102,16 +94,12 @@ async function checkCriterion2Result(){
 
     
     if (!isCorrect)
-        return '2 задание: не выполнено. Обратный отсчет не останавливается при достижении 0 минут и 0 секунд.';
-    else 
-        return '2 задание: выполнено.';
+		return ['2 задание (обратный отсчет): не выполнено.', 'Обратный отсчет не останавливается при достижении 0 минут и 0 секунд. (-11%)']
+	else
+		return ['2 задание (обратный отсчет): выполнено.', '11', '%',]
 }
 
-function checkCriterion3(){
-    return checkCriterion3Result()
-}
-
-async function checkCriterion3Result(){
+async function checkCriterion3() {
     const minInput = getXPathResult(`//input[@id = 'min']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const secInput = getXPathResult(`//input[@id = 'sec']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const startButton = getXPathResult(`//button[@id = 'go']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
@@ -161,16 +149,12 @@ async function checkCriterion3Result(){
         });
     }
     if (!isCorrect)
-        return '3 задание: не выполнено. Текст напоминания не выведен при остановке счетчика.';
-    else 
-        return '3 задание: выполнено.';
+		return ['3 задание (текст напоминания ): не выполнено.', 'Текст напоминания не выведен при остановке счетчика. (-11%)']
+	else
+		return ['3 задание (текст напоминания ): выполнено.', '11', '%',]
 }
 
-function checkCriterion4(){
-    return checkCriterion4Result()
-}
-
-async function checkCriterion4Result(){
+async function checkCriterion4() {
     const minInput = getXPathResult(`//input[@id = 'min']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const secInput = getXPathResult(`//input[@id = 'sec']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const startButton = getXPathResult(`//button[@id = 'go']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
@@ -211,16 +195,12 @@ async function checkCriterion4Result(){
         });
     }
     if (!isCorrect)
-        return '4 задание: не выполнено. Цвет фона не изменился при остановке счетчика.';
-    else 
-        return '4 задание: выполнено.';
+		return ['4 задание (цвет фона): не выполнено.', 'Цвет фона не изменился при остановке счетчика. (-11%)']
+	else
+		return ['4 задание (цвет фона): выполнено.', '11', '%',]
 }
 
-function checkCriterion5(){
-    return checkCriterion5Result()
-}
-
-async function checkCriterion5Result(){
+async function checkCriterion5() {
     const minInput = getXPathResult(`//input[@id = 'min']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const secInput = getXPathResult(`//input[@id = 'sec']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const startButton = getXPathResult(`//button[@id = 'go']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
@@ -253,16 +233,12 @@ async function checkCriterion5Result(){
         });
     }
     if (!isCorrect)
-        return '5 задание: не выполнено. Повторный запуск со сбросом фонового цвета не реализован.';
-    else 
-        return '5 задание: выполнено.';
+		return ['5 задание (повторный запуск со сбросом фонового цвета): не выполнено.', 'Повторный запуск со сбросом фонового цвета не реализован. (-11%)']
+	else
+		return ['5 задание (повторный запуск со сбросом фонового цвета): выполнено.', '11', '%',]
 }
 
-function checkCriterion6(){
-    return checkCriterion6Result()
-}
-
-async function checkCriterion6Result(){
+async function checkCriterion6() {
     const minInput = getXPathResult(`//input[@id = 'min']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const secInput = getXPathResult(`//input[@id = 'sec']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const startButton = getXPathResult(`//button[@id = 'go']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
@@ -289,16 +265,12 @@ async function checkCriterion6Result(){
         });
     }
     if (!isCorrect)
-        return '6 задание: не выполнено. Кнопка "Пуск" реагирует на повторное нажатие при активном отсчете.';
-    else 
-        return '6 задание: выполнено.';
+		return ['6 задание (реагирование кнопки "Пуск"): не выполнено.', 'Кнопка "Пуск" реагирует на повторное нажатие при активном отсчете. (-11%)']
+	else
+		return ['6 задание (реагирование кнопки "Пуск"): выполнено.', '11', '%',]
 }
 
-function checkCriterion7() {
-    return checkCriterion7Result()
-}
-
-async function checkCriterion7Result(){
+async function checkCriterion7() {
     const minInput = getXPathResult(`//input[@id = 'min']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const secInput = getXPathResult(`//input[@id = 'sec']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const startButton = getXPathResult(`//button[@id = 'go']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
@@ -324,16 +296,12 @@ async function checkCriterion7Result(){
         });
     }
     if (!isCorrect)
-        return '7 задание: не выполнено. Кнопка "Пауза" не останавливает отсчет.';
-    else 
-        return '7 задание: выполнено.';
+		return ['7 задание (кнопка "Пауза"): не выполнено.', 'Кнопка "Пауза" не останавливает отсчет. (-11%)']
+	else
+		return ['7 задание (кнопка "Пауза"): выполнено.', '11', '%',]
 }
 
-function checkCriterion8() {
-    return checkCriterion8Result()
-}
-
-async function checkCriterion8Result(){
+async function checkCriterion8() {
     const minInput = getXPathResult(`//input[@id = 'min']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const secInput = getXPathResult(`//input[@id = 'sec']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const startButton = getXPathResult(`//button[@id = 'go']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
@@ -360,94 +328,14 @@ async function checkCriterion8Result(){
         });
     }
     if (!isCorrect)
-        return '8 задание: не выполнено. Кнопка "Стоп" не прекращает отсчет и значения полей не сбрасываются в 0.';
-    else 
-        return '8 задание: выполнено.';
+		return ['8 задание (кнопка "Стоп"): не выполнено.', 'Кнопка "Стоп" не прекращает отсчет и значения полей не сбрасываются в 0. (-11%)']
+	else
+		return ['8 задание (кнопка "Стоп"): выполнено.', '11', '%',]
 }
 
-function checkCriterion9() {
-    return checkCriterion9Result()
+async function checkCriterion9() {
+	return checkVariantCriterion9();
 }
-
-async function checkCriterion9Result(){
-    const xpathInput = `//input[@id != 'message' and @id != 'color' and @id != 'min' and @id != 'sec' and @type != 'hidden']`;
-    const buttons = getXPathResult(`//button[@id != 'go' and @id != 'pause' and @id != 'stop']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
-    const textarea = getXPathResult(`//textarea`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-    const inputNumber = getXPathResult(xpathInput, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-    const img = getXPathResult(`//img`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-    var isCorrect = false;
-
-    if (buttons.snapshotLength > 1 && textarea && inputNumber && img) {
-        inputNumber.value = 1000;
-        const delay = parseInt(inputNumber.value);
-        textarea.value = `https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500
-https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ23nBrmcH_iH7gCRwDkqEnWJRPYMm6OOaOew&s
-https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4sxR0oXi8nWl-zyom3jqI10E4ap6QLvF41Q&s
-https://martinvorel.com/wp-content/uploads/2022/01/photography-print-3614-500x333.jpg`;
-        const urls = textarea.value.split('\n');
-        
-        for (var i = 0; i < buttons.snapshotLength; i++) {
-            var currentIndex = 0;
-            buttons.snapshotItem(i).click();
-            const isThisButton = new Promise((resolve) => {
-                const intervalId = setInterval(() => {
-                    if (currentIndex >= urls.length)
-                        currentIndex = 0;
-                    if (img.src !== urls[currentIndex]) {
-                        isCorrect = false;
-                        clearInterval(intervalId, true);
-                        resolve(false);
-                    }
-                    currentIndex++;
-                }, delay);
-                setTimeout(() => {
-                    if (img.src !== urls[0]){
-                        isCorrect = false;
-                    }
-                    else isCorrect = true;
-                    clearInterval(intervalId, true);
-                    resolve(true);
-                }, delay * 5);
-            });
-            const resultIsThisButton = await isThisButton;
-            
-            if (resultIsThisButton) {
-                currentIndex = 0;
-                buttons.snapshotItem(i).click();
-                const correctButtons = new Promise((resolve) => {
-                    const intervalId = setInterval(() => {});
-                    var imgsrc = null;
-                    setTimeout(() => {
-                        if (i === 0)
-                            buttons.snapshotItem(i + 1).click();
-                        else buttons.snapshotItem(i - 1).click();
-                        imgsrc = img.src;
-                    }, delay * 2);
-                    setTimeout(() => {
-                        if (imgsrc && img.src !== imgsrc){
-                            isCorrect = false;
-                            clearInterval(intervalId, true);
-                            resolve(false);
-                        }
-                        else {
-                            isCorrect = true;
-                            clearInterval(intervalId, true);
-                            resolve(true);
-                        }
-                    }, delay * 4);
-                });
-                const correctButtonsResult = await correctButtons;
-                if (correctButtonsResult)
-                    break;
-            }
-        }
-    }
-    if (!isCorrect)
-        return '9 задание: не выполнено. Изменение изображений неправильно сделано.';
-    else 
-        return '9 задание: выполнено.';
-}
-
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -459,12 +347,24 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
-checkCriteria(checkCriterion1, checkCriterion2, checkCriterion3, checkCriterion4, checkCriterion5, checkCriterion6, checkCriterion7, checkCriterion8, checkCriterion9)
+
+
+checkCriteria(
+	checkCriterion1,
+	checkCriterion2,
+	checkCriterion3,
+	checkCriterion4,
+	checkCriterion5,
+	checkCriterion6,
+	checkCriterion7,
+	checkCriterion8,
+	checkCriterion9
+);

@@ -1,178 +1,113 @@
-function checkCriterion1() {
-    const xpath = `//li[contains(text(), "")]`;
+async function checkCriterion1() {
+    const xpathAbsolute = '//img[starts-with(@src, "http://") or starts-with(@src, "https://")]';
+    const xpathRel = '//img[not(starts-with(@src, "http://")) and not(starts-with(@src, "https://")) and (contains(@src, "/"))]';
+    const absoluteResult = getXPathResult(xpathAbsolute, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+    const relResult = getXPathResult(xpathRel, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+    var isAltNotFoundRel = true;
+    var isAltNotFoundAbs = true;
+    for (var i = 0; i < relResult.snapshotLength; i++) {
+        const img = relResult.snapshotItem(i);
+        const altText = img.getAttribute('alt');
+        if (altText){
+            isAltNotFoundRel = false;
+            break;
+        }
+    }
+    for (var i = 0; i < absoluteResult.snapshotLength; i++) {
+        const img = absoluteResult.snapshotItem(i);
+        const altText = img.getAttribute('alt');
+        if (altText){
+            isAltNotFoundAbs = false;
+            break;
+        }
+    }
+    if (absoluteResult.snapshotLength === 0 || relResult.snapshotLength === 0 || isAltNotFoundRel || isAltNotFoundAbs)
+		return ['1 задание (изображения с альтернативным текстом и с разными видами url): не выполнено.', 'Отсутствуют изображения с альтернативным текстом и с абсолютной и относительной url. (-25%)']
+	else
+		return ['1 задание (изображения с альтернативным текстом и с разными видами url): выполнено.', '25', '%',]
+}
+
+async function checkCriterion2() {
+    const xpath = '//img';
     const result = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
-    const xpathData = `//a[contains(@href, "data/")]`;
-    const dataResult = getXPathResult(xpathData, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
-    var resultCheck = false;
+    const map = new Map();
+    var images;
+    const set = new Set();
+    var ratio = null;
+    isNotRatio = true;
+    isNotSameSize = true;
 
-    if (result.snapshotLength >= 3 && dataResult.snapshotLength >= 3){
-        const dataSet = new Set();
-
-        for (var i = 0; i < dataResult.snapshotLength; i++) {
-            const node = dataResult.snapshotItem(i);
-            dataSet.add(node.href);
-        }
-        resultCheck = dataSet.size === dataResult.snapshotLength;
+    for (var i = 0; i < result.snapshotLength; i++) {
+        const img = result.snapshotItem(i);
+        const src = img.getAttribute('src');
+        if (!map.has(src))
+            map.set(src, []);
+        map.get(src).push(img);
     }
-    if (!resultCheck)
-        return 'задание 1: не выполнено.  В index.html отсутствует список поэтов и ссылки на веб-страницы со списком стихов, находящиеся в папке data.';
-    else return 'задание 1: выполнено.';
-}
-
-async function checkCriterion2(){
-    const xpath = `//a[contains(@href, "data/")]`;
-    const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-    var isNotFound = false;
-    if (result.snapshotLength > 0) {
-        for (var i = 0; i < result.snapshotLength; i++) {
-            const firstNode = result.snapshotItem(i);
-            const url = firstNode.href;
-            const response = await chrome.runtime.sendMessage({ action: 'fetchPage', url: url });
-
-            if (response.success) {
-                const html = response.html;
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                const filesXpath = `//a[contains(@href, "../files/")]`;
-                const filesResult = document.evaluate(filesXpath, tempDiv, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-                const indexXpath = `//a[@href = "../index.html"]`;
-                const indexResult = document.evaluate(indexXpath, tempDiv, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-                if (filesResult.snapshotLength === 0 || indexResult.snapshotLength === 0) {
-                    isNotFound = true;
+    for (const [src, img] of map) {
+        if (img.length >= 3)
+            images = img;
+    }
+    if (images){
+        for (var i = 0; i < images.length; i++) {
+            const img = images[i];
+            const width = img.width;
+            const height = img.height;
+            const currentRatio = width/height;
+            set.add(`${width}+${height}`);
+            if (ratio === null)
+                ratio = currentRatio;
+            else if (ratio === currentRatio)
+                isNotRatio = false;
+                else {
+                    isNotRatio = true;
                     break;
                 }
-            }
         }
+        if (set.size === images.length)
+            isNotSameSize = false;
     }
-    else isNotFound = true;
-    if (isNotFound) 
-        return 'задание 2: не выполнено. Ссылки на стихи и возврат на главную страницу не найдены.';
-    else 
-        return 'задание 2: выполнено.';
+    if (!images || isNotRatio || isNotSameSize)
+		return ['2 задание (изображения с одинаковым url, сохраняющие пропорции): не выполнено.', 'Отсутствуют три разных по размеру изображения с одинаковым url, сохраняющие пропорции. (-25%)']
+	else
+		return ['2 задание (изображения с одинаковым url, сохраняющие пропорции): выполнено.', '25', '%',]
 }
 
-async function checkCriterion3(){
-    const xpath = `//a[contains(@href, "data/")]`;
-    const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-    var isNotFound = false;
-    if (result.snapshotLength > 0) {
-        for (var i = 0; i < result.snapshotLength; i++) {
-            const firstNode = result.snapshotItem(i);
-            const url = firstNode.href;
-            const response = await chrome.runtime.sendMessage({ action: 'fetchPage', url: url });
-            if (response.success) {
-                const html = response.html;
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                const xpathWiki = `//a[starts-with(@href, 'https://ru.wikipedia.org/')]`;
-                const wikiResult = document.evaluate(xpathWiki, tempDiv, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-                if (wikiResult.snapshotLength === 0) {
-                    isNotFound = true;
-                    break;
-                }
-            }
+async function checkCriterion3() {
+    const xpath = '//a[starts-with(@href, "http")]//img';
+    const result = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+    if (result.snapshotLength === 0)
+		return ['3 задание (ссылка с изображения): не выполнено.', 'Отсутствуют ссылка с одного из изображений. (-25%)']
+	else
+		return ['3 задание (ссылка с изображения): выполнено.', '25', '%',]
+}
+
+async function checkCriterion4() {
+    const mapXpath = '//map';
+    const imgXpath = '//img[@usemap]';
+    const mapResult = getXPathResult(mapXpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+    const imgResult = getXPathResult(imgXpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+    var isConnected;
+    const areaXpath = '//map/area';
+    const areaResult = getXPathResult(areaXpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+    var isNotHrefInArea = true;
+
+    for (var i = 0; i < areaResult.snapshotLength; i++) {
+        const href = areaResult.snapshotItem(i).getAttribute('href');
+        if (!href) {
+            isNotHrefInArea = true;
+            break;
         }
-    } else isNotFound = true;
-    if (isNotFound) 
-        return 'задание 3: не выполнено. Ссылки на википедию не найдены.';
-    else 
-        return 'задание 3: выполнено.';
+        else isNotHrefInArea = false;
+    }
+    if (imgResult.snapshotLength > 0 && mapResult.snapshotLength > 0)
+        isConnected = imgResult.snapshotItem(0).getAttribute('usemap') === ("#"+mapResult.snapshotItem(0).name || "#"+mapResult.snapshotItem(0).getAttribute('id'));
+    if (!isConnected || isNotHrefInArea)
+		return ['4 задание (карта изображений): не выполнено.', ' При щелчке кнопкой мышки по каждой из областей карты, не открывается отдельная веб-страница. (-25%)']
+	else
+		return ['4 задание (карта изображений): выполнено.', '25', '%',]
 }
 
-async function checkCriterion4(){
-    const xpath = `//a[contains(@href, "data/")]`;
-    const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-    var isNotFound = false;
-    if (result.snapshotLength > 0) {
-        for (var i = 0; i < result.snapshotLength; i++) {
-            const firstNode = result.snapshotItem(i);
-            const url = firstNode.href;
-            const response = await chrome.runtime.sendMessage({ action: 'fetchPage', url: url });
-            if (response.success) {
-                const html = response.html;
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                const xpathFiles = `//a[contains(@href, 'files/')]`;
-                const filesResult = document.evaluate(xpathFiles, tempDiv, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-                
-                if (filesResult.snapshotLength > 0) {
-                    for (var j = 0; j < filesResult.snapshotLength; j++) {
-                        const firstNodeFiles = filesResult.snapshotItem(j);
-                        var urlFiles = firstNodeFiles.href;
-                        const pathParts = urlFiles.split('/');
-                        const filesIndex = pathParts.indexOf('files');
-                        if (filesIndex > 0)
-                            pathParts.splice(filesIndex, 0, 'public_html');
-                        const newPath = pathParts.join('/');
-                        urlFiles = newPath;
-                        const response2 = await chrome.runtime.sendMessage({ action: 'fetchPage', url: urlFiles });
-                        if (response2.success) {
-                            const fileHtml = response2.html;
-                            const tempDivFile = document.createElement('div');
-                            tempDivFile.innerHTML = fileHtml;
-                            const indexXpath = `//a[@href = "../index.html"]`;
-                            const indexResult = document.evaluate(indexXpath, tempDivFile, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-                            const dataXpath = `//a[contains(@href, "data/")]`;
-                            const dataResult = document.evaluate(dataXpath, tempDivFile, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-                            const poemXpath = `//a[not (@href = "../index.html") and not(contains(@href, "data/"))]`;
-                            const poemResult = document.evaluate(poemXpath, tempDivFile, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-                            if (indexResult.snapshotLength === 0 || dataResult.snapshotLength === 0 || poemResult.snapshotLength === 0) {
-                                isNotFound = true;
-                                break;
-                            }
-                        }
-                    }
-                } else isNotFound = true; 
-            }
-        }
-    } else isNotFound = true;
-            
-    if (isNotFound) 
-        return 'задание 4: не выполнено. ссылки на список стихов, возврат на главную страницу и ссылки на другие стихи не найдены на странице со стихом.';
-    else 
-        return 'задание 4: выполнено.';
-}
-
-async function checkCriterion5(){
-    const xpath = `//a[not(contains(@href, "data/"))]`;
-    const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-    var isNotFound = false;
-
-    if (result.snapshotLength > 0) {
-        for (var i = 0; i < result.snapshotLength; i++) {
-            const firstNode = result.snapshotItem(i);
-            const url = firstNode.href;
-            const response = await chrome.runtime.sendMessage({ action: 'fetchPage', url: url });
-            if (response.success) {
-                const html = response.html;
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                var sum = 0;
-                const xpathDef = `//@id`;
-                const defResult = document.evaluate(xpathDef, tempDiv, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-                if(defResult.snapshotLength >= 3){
-                    for (var j = 0; j < defResult.snapshotLength; j++) {
-                        const id = defResult.snapshotItem(j).textContent;
-                        const xpathLink = `//a[(@href = "#${id}")]`;
-                        const linkResult = document.evaluate(xpathLink, tempDiv, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-                        if (linkResult.snapshotLength > 0)
-                            sum+=1;
-                    }
-                    if (sum < 3)
-                        isNotFound = true;
-                    else {
-                        isNotFound = false;
-                        break;
-                    }
-                } else isNotFound = true; 
-            }
-        }
-    } else isNotFound = true; 
-    if (isNotFound) 
-        return 'задание 5: не выполнено. 3-ех или больше ссылок-якорей нет на дополнительной странице.';
-    else 
-        return 'задание 5: выполнено.';
-}
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -184,12 +119,19 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
-checkCriteria(checkCriterion1, checkCriterion2, checkCriterion3, checkCriterion4, checkCriterion5)
+
+
+checkCriteria(
+	checkCriterion1,
+	checkCriterion2,
+	checkCriterion3,
+	checkCriterion4
+);

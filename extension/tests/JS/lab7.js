@@ -16,9 +16,9 @@ async function checkCriterion1() {
     else isCorrect = false;
 
     if (!isCorrect)
-        return ['1 задание (прямоугольники в контейнер): не выполнено.', 'Прямоугольники не были добавлены на страницу в контейнер.'];
-    else 
-        return ['1 задание (прямоугольники в контейнер): выполнено.', 'Процент:', 15];
+		return ['1 задание (прямоугольники в контейнер): не выполнено.', 'Прямоугольники не были добавлены на страницу в контейнер. (-14%)']
+	else
+		return ['1 задание (прямоугольники в контейнер): выполнено.', '14', '%',]
 }
 
 async function checkCriterion2() {
@@ -65,9 +65,9 @@ async function checkCriterion2() {
     }
     else isCorrect = false;
     if (!isCorrect)
-        return ['2 задание (поле "colortouse" с проверкой ввода): не выполнено.', 'Поле "colortouse" принимает не только шестнадцатеричные символы.'];
-    else 
-        return ['2 задание (поле "colortouse" с проверкой ввода): выполнено.', 'Процент:', 15];
+		return ['2 задание (поле "colortouse" с проверкой ввода): не выполнено.', 'Поле "colortouse" принимает не только шестнадцатеричные символы. (-14%)']
+	else
+		return ['2 задание (поле "colortouse" с проверкой ввода): выполнено.', '14', '%',]
 }
 
 async function checkCriterion3() {
@@ -117,11 +117,10 @@ async function checkCriterion3() {
     } 
     else isCorrect = false;
     if (!isCorrect)
-        return ['3 задание (проверка клавиш Backspace и Delete): не выполнено.', 'Поле "colortouse" неверно обрабатывает клавиши Backspace/Delete.'];
-    else
-        return ['3 задание (проверка клавиш Backspace и Delete): выполнено.', 'Процент:', 15];
+		return ['3 задание (проверка клавиш Backspace и Delete): не выполнено.', 'Поле "colortouse" неверно обрабатывает клавиши Backspace/Delete. (-14%)']
+	else
+		return ['3 задание (проверка клавиш Backspace и Delete): выполнено.', '14', '%',]
 }
-
 
 async function checkCriterion4() {
     const rectangles = document.querySelectorAll('div.rectangle');
@@ -139,9 +138,9 @@ async function checkCriterion4() {
     }
     else isCorrect = false;
     if (!isCorrect)
-        return ['4 задание (закрашивание прямоугольников введенным цветом): не выполнено.', 'При нажатии по кнопке "Цвет" прямоугольники не окрасились в цвет, введенный в поле "colortouse".'];
-    else 
-        return ['4 задание (закрашивание прямоугольников введенным цветом): выполнено.', 'Процент:', 15];
+		return ['4 задание (закрашивание прямоугольников введенным цветом): не выполнено.', 'При нажатии по кнопке "Цвет" прямоугольники не окрасились в цвет, введенный в поле "colortouse". (-14%)']
+	else
+		return ['4 задание (закрашивание прямоугольников введенным цветом): выполнено.', '14', '%',]
 }
 
 async function checkCriterion5() {
@@ -180,9 +179,9 @@ async function checkCriterion5() {
     }
     else isCorrect = false;
     if (!isCorrect)
-        return ['5 задание (курсор меняет цвета прямоугольников на случайный): не выполнено.', 'Прямоугольник не изменил свой цвет фона на случайный при наведении курсора мыши.'];
-    else 
-        return ['5 задание (курсор меняет цвета прямоугольников на случайный): выполнено.','Процент:', 25];
+		return ['5 задание (курсор меняет цвета прямоугольников на случайный): не выполнено.', 'Прямоугольник не изменил свой цвет фона на случайный при наведении курсора мыши. (-14%)']
+	else
+		return ['5 задание (курсор меняет цвета прямоугольников на случайный): выполнено.', '14', '%',]
 }
 
 async function checkCriterion6() {
@@ -220,9 +219,9 @@ async function checkCriterion6() {
     }     
     else isCorrect = false;
     if (!isCorrect)
-        return ['6 задание (закрасить прямоугольники): не выполнено.', 'Не все прямоугольники изменили цвет после нажатия Ctrl + Вверх.'];
-    else 
-        return ['6 задание (закрасить прямоугольники): выполнено.', 'Процент:', 15];
+		return ['6 задание (закрасить прямоугольники): не выполнено.', 'Не все прямоугольники изменили цвет после нажатия Ctrl + Вверх. (-14%)']
+	else
+		return ['6 задание (закрасить прямоугольники): выполнено.', '14', '%',]
 }
 
 async function checkCriterion7() {
@@ -263,38 +262,13 @@ async function checkCriterion7() {
     else isCorrect = false;
 
     if (!isCorrect)
-        return ['7 задание (свойство Draggable): не выполнено.', 'Не сделано перетаскивание прямоугольников внутри родительской области.'];
-    else 
-        return ['7 задание (свойство Draggable): выполнено.', 'Процент:', 15];
+		return ['7 задание (свойство Draggable): не выполнено.', 'Не сделано перетаскивание прямоугольников внутри родительской области. (-1%)']
+	else
+		return ['7 задание (свойство Draggable): выполнено.', '1', '%',]
 }
 
 async function checkCriterion8() {
-    const rectangles = document.querySelectorAll('.rectangle');
-    const rectangleArea = getXPathResult(`//div[@id = 'rectanglearea']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-    const addbutton = getXPathResult(`//button[not (@id = "color")]`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-    const numberInput = getXPathResult(`//input[not (@id = "colortouse") and not(@type = 'hidden')]`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
-    var isCorrect = true;
-
-    if (rectangles.length !== 0 && rectangleArea && addbutton && numberInput) {
-        const lengthBefore = rectangles.length;
-        numberInput.value = 2;
-        addbutton.click();
-        const afterRects = document.querySelectorAll('.rectangle');
-        const lengthAfter = afterRects.length;
-        if (lengthBefore !== lengthAfter - numberInput.value)
-            isCorrect = false;
-        else { 
-            afterRects.forEach(rect => {
-                if (!rectangleArea.contains(rect))
-                    isCorrect = false;
-            });
-        }
-    } 
-    else isCorrect = false;
-    if (!isCorrect)
-        return ['8 задание (добавление прямоугольников): не выполнено.', 'Добавление прямоугольников по нажатию кнопки не работает правильно.'];
-    else 
-        return ['8 задание (добавление прямоугольников): выполнено.', 'Процент:', 15];
+	return checkVariantCriterion8();
 }
 
 function getXPathResult(xpath, XPathResult){
@@ -307,21 +281,23 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
+
+
 checkCriteria(
-    checkCriterion1,
-    checkCriterion2,
-    checkCriterion3,
-    checkCriterion4,
-    checkCriterion5,
-    checkCriterion6,
-    checkCriterion7,
-    checkCriterion8
+	checkCriterion1,
+	checkCriterion2,
+	checkCriterion3,
+	checkCriterion4,
+	checkCriterion5,
+	checkCriterion6,
+	checkCriterion7,
+	checkCriterion8
 );

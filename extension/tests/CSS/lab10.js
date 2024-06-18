@@ -1,8 +1,4 @@
-function checkCriterion1(){
-    return checkCriterion1Result()
-}
-
-async function checkCriterion1Result(){
+async function checkCriterion1() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = false;
 
@@ -27,16 +23,12 @@ async function checkCriterion1Result(){
         styleElement.remove();
     }
     if (!isCorrect)
-        return 'задание 1: не выполнено. Не разработан стиль для текстовых полей ввода.';
-    else 
-        return 'задание 1: выполнено.';
+		return ['1 задание (стиль для текстовых полей ввода): не выполнено.', 'Не разработан стиль для текстовых полей ввода. (-16%)']
+	else
+		return ['1 задание (стиль для текстовых полей ввода): выполнено.', '16', '%',]
 }
 
-function checkCriterion2(){
-    return checkCriterion2Result()
-}
-
-async function checkCriterion2Result(){
+async function checkCriterion2() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = false;
 
@@ -61,16 +53,12 @@ async function checkCriterion2Result(){
         styleElement.remove();
     }
     if (!isCorrect)
-        return 'задание 2: не выполнено. Не разработан стиль для радио-кнопок.';
-    else 
-        return 'задание 2: выполнено.';
+		return ['2 задание (стиль для радио-кнопок): не выполнено.', 'Не разработан стиль для радио-кнопок. (-16%)']
+	else
+		return ['2 задание (стиль для радио-кнопок): выполнено.', '16', '%',]
 }
 
-function checkCriterion3(){
-    return checkCriterion3Result()
-}
-
-async function checkCriterion3Result(){
+async function checkCriterion3() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = false;
 
@@ -95,16 +83,12 @@ async function checkCriterion3Result(){
         styleElement.remove();
     }
     if (!isCorrect)
-        return 'задание 3: не выполнено. Не разработан стиль для флажков.';
-    else 
-        return 'задание 3: выполнено.';
+		return ['3 задание (стиль для флажков): не выполнено.', 'Не разработан стиль для флажков. (-16%)']
+	else
+		return ['3 задание (стиль для флажков): выполнено.', '16', '%',]
 }
 
-function checkCriterion4(){
-    return checkCriterion4Result()
-}
-
-async function checkCriterion4Result(){
+async function checkCriterion4() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = false;
 
@@ -129,16 +113,12 @@ async function checkCriterion4Result(){
         styleElement.remove();
     }
     if (!isCorrect)
-        return 'задание 4: не выполнено. Не разработан стиль для списков.';
-    else 
-        return 'задание 4: выполнено.';
+		return ['4 задание (стиль для списков): не выполнено.', 'Не разработан стиль для списков. (-16%)']
+	else
+		return ['4 задание (стиль для списков): выполнено.', '16', '%',]
 }
 
-function checkCriterion5(){
-    return checkCriterion5Result()
-}
-
-async function checkCriterion5Result(){
+async function checkCriterion5() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = false;
 
@@ -164,16 +144,12 @@ async function checkCriterion5Result(){
         styleElement.remove();
     }
     if (!isCorrect)
-        return 'задание 5: не выполнено. Не разработан стиль для кнопок.';
-    else 
-        return 'задание 5: выполнено.';
+		return ['5 задание (стиль для кнопок): не выполнено.', 'Не разработан стиль для кнопок. (-16%)']
+	else
+		return ['5 задание (стиль для кнопок): выполнено.', '16', '%',]
 }
 
-function checkCriterion6(){
-    return checkCriterion6Result()
-}
-
-async function checkCriterion6Result(){
+async function checkCriterion6() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = false;
 
@@ -198,10 +174,11 @@ async function checkCriterion6Result(){
         styleElement.remove();
     }
     if (!isCorrect)
-        return 'задание 6: не выполнено. Не разработан стиль для полей обязательных к заполнению.';
-    else 
-        return 'задание 6: выполнено.';
+		return ['6 задание (стиль для полей обязательных к заполнению): не выполнено.', 'Не разработан стиль для полей обязательных к заполнению. (-20%)']
+	else
+		return ['6 задание (стиль для полей обязательных к заполнению): выполнено.', '20', '%',]
 }
+
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -213,12 +190,21 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
-checkCriteria(checkCriterion1, checkCriterion2, checkCriterion3,checkCriterion4,checkCriterion5,checkCriterion6)
+
+
+checkCriteria(
+	checkCriterion1,
+	checkCriterion2,
+	checkCriterion3,
+	checkCriterion4,
+	checkCriterion5,
+	checkCriterion6
+);

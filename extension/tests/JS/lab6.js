@@ -16,9 +16,9 @@ async function checkCriterion1() {
     else isCorrect = false;
 
     if (!isCorrect)
-        return ['1 задание (прямоугольники в контейнер): не выполнено.', 'Прямоугольники не были добавлены на страницу в контейнер (-15%).'];
-    else 
-        return ['1 задание (прямоугольники в контейнер): выполнено.', 15, '%'];
+		return ['1 задание (прямоугольники в контейнер): не выполнено.', 'Прямоугольники не были добавлены на страницу в контейнер. (-15%)']
+	else
+		return ['1 задание (прямоугольники в контейнер): выполнено.', '15', '%',]
 }
 
 async function checkCriterion2() {
@@ -75,9 +75,9 @@ async function checkCriterion2() {
     }
     else isCorrect = false;
     if (!isCorrect)
-        return ['2 задание (кнопка "Пуск!" с запуском изменения цвета прямоугольников 1 раз в секунду): не выполнено.', 'При нажатии кнопки "Пуск!" каждый прямоугольник не изменяет свой цвет случайным образом 1 раз каждую секунду (-15%).'];
-    else 
-        return ['2 задание (кнопка "Пуск!" с запуском изменения цвета прямоугольников 1 раз в секунду): выполнено.',  15, '%'];
+		return ['2 задание (кнопка "Пуск!" с запуском изменения цвета прямоугольников 1 раз в секунду): не выполнено.', 'При нажатии кнопки "Пуск!" каждый прямоугольник не изменяет свой цвет случайным образом 1 раз каждую секунду. (-15%)']
+	else
+		return ['2 задание (кнопка "Пуск!" с запуском изменения цвета прямоугольников 1 раз в секунду): выполнено.', '15', '%',]
 }
 
 async function checkCriterion3() {
@@ -95,9 +95,9 @@ async function checkCriterion3() {
     }
     else isCorrect = false;
     if (!isCorrect)
-        return ['3 задание (кнопка без повторного нажатия): не выполнено.', 'Кнопка "Пуск!" реагирует на повторные нажатия (-15%).'];
-    else 
-        return ['3 задание (кнопка без повторного нажатия): выполнено.',  15, '%'];
+		return ['3 задание (кнопка без повторного нажатия): не выполнено.', 'Кнопка "Пуск!" реагирует на повторные нажатия. (-15%)']
+	else
+		return ['3 задание (кнопка без повторного нажатия): выполнено.', '15', '%',]
 }
 
 async function checkCriterion4() {
@@ -122,9 +122,9 @@ async function checkCriterion4() {
     }
     else isCorrect = false;
     if (!isCorrect)
-        return ['4 задание (кнопка "Стоп" с остановкой изменения цветов): не выполнено.', 'При нажатии кнопки "Стоп" смена цветов не прекратилась (-15%).'];
-    else 
-        return ['4 задание (кнопка "Стоп" с остановкой изменения цветов): выполнено.',  15, '%'];
+		return ['4 задание (кнопка "Стоп" с остановкой изменения цветов): не выполнено.', 'При нажатии кнопки "Стоп" смена цветов не прекратилась. (-15%)']
+	else
+		return ['4 задание (кнопка "Стоп" с остановкой изменения цветов): выполнено.', '15', '%',]
 }
 
 async function checkCriterion5() {
@@ -141,13 +141,13 @@ async function checkCriterion5() {
     }
     else isCorrect = false;
     if (!isCorrect)
-        return ['5 задание (удаление прямоугольника по клику): не выполнено.', 'Прямоугольник не удаляется при клике по нему (-15%).'];
-    else 
-        return ['5 задание (удаление прямоугольника по клику): выполнено.', 15, '%'];
+		return ['5 задание (удаление прямоугольника по клику): не выполнено.', 'Прямоугольник не удаляется при клике по нему. (-15%)']
+	else
+		return ['5 задание (удаление прямоугольника по клику): выполнено.', '15', '%',]
 }
 
 async function checkCriterion6() {
-    return checkVariantCriterion();
+	return checkVariantCriterion6();
 }
 
 function getXPathResult(xpath, XPathResult){
@@ -160,19 +160,21 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
+
+
 checkCriteria(
-    checkCriterion1,
-    checkCriterion2,
-    checkCriterion3, 
-    checkCriterion4,
-    checkCriterion5,
-    checkCriterion6
+	checkCriterion1,
+	checkCriterion2,
+	checkCriterion3,
+	checkCriterion4,
+	checkCriterion5,
+	checkCriterion6
 );

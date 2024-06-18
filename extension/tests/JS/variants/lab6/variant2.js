@@ -1,4 +1,4 @@
-async function checkVariantCriterion() {
+async function checkVariantCriterion6() {
     const rectangles = document.querySelectorAll('div.rectangle');
     const rectangleArea = getXPathResult(`//div[@id = 'rectanglearea']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = true;
@@ -38,7 +38,7 @@ async function checkVariantCriterion() {
     else isCorrect = false;
 
     if (!isCorrect)
-        return ['6 задание (курсор меняет прямоугольник): не выполнено.', 'Прямоугольник не меняет цвет контуров должным образом при наведении курсора (-25%).'];
-    else 
-        return ['6 задание (курсор меняет прямоугольник): выполнено.', 25, '%'];
+		return ['6 задание (курсор меняет прямоугольник): не выполнено.', 'Прямоугольник не меняет цвет контуров должным образом при наведении курсора. (-25%)']
+	else
+		return ['6 задание (курсор меняет прямоугольник): выполнено.', '25', '%',]
 }

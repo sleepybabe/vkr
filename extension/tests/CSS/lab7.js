@@ -1,8 +1,4 @@
-function checkCriterion1(){
-    return checkCriterion1Result()
-}
-
-async function checkCriterion1Result(){
+async function checkCriterion1() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const pResult = getXPathResult(`//p`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const count = {
@@ -53,16 +49,12 @@ async function checkCriterion1Result(){
         styleElement.remove();
     }
     if (count.firstletter < 1 || count.firstline < 1)
-        return 'задание 1: не выполнено. Первая буква абзаца не больше в 3 раза размера остальных символов абзаца, цветом не выделяется. Первая строка абзаца без курсива.';
-    else 
-        return 'задание 1: выполнено.';
+		return ['1 задание (первая строка и первая буква): не выполнено.', 'Первая буква абзаца не больше в 3 раза размера остальных символов абзаца, цветом не выделяется / первая строка абзаца без курсива. (-50%)']
+	else
+		return ['1 задание (первая строка и первая буква): выполнено.', '50', '%',]
 }
 
-function checkCriterion2(){
-    return checkCriterion2Result()
-}
-
-async function checkCriterion2Result(){
+async function checkCriterion2() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const count = {
         before: 0,
@@ -95,10 +87,11 @@ async function checkCriterion2Result(){
         styleElement.remove();
     }
     if (count.after < 1 || count.before < 1)
-        return 'задание 2: не выполнено. Не установлено перед цитатой и после автоматические кавычки.';
-    else 
-        return 'задание 2: выполнено.';
+		return ['2 задание (автоматические кавычки): не выполнено.', 'Не установлено перед цитатой и после автоматические кавычки. (-50%)']
+	else
+		return ['2 задание (автоматические кавычки): выполнено.', '50', '%',]
 }
+
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -110,12 +103,17 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
-checkCriteria(checkCriterion1, checkCriterion2)
+
+
+checkCriteria(
+	checkCriterion1,
+	checkCriterion2
+);

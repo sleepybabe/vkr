@@ -154,7 +154,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 const li = document.createElement("li");
                 if (result.length === 3) {
                     li.textContent = `${result[0]} ${result[1]}${result[2]}`;
-                    sumProcent += result[1];
+                    sumProcent += parseFloat(result[1]);
                 }
                 else {
                     li.textContent = `${result[0]} ${result[1]}`;

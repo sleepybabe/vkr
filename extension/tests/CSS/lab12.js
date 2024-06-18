@@ -1,13 +1,13 @@
-function checkCriterion1() {
+async function checkCriterion1() {
     const xpath = `//meta[contains(@name, 'viewport') and contains(@content, 'width=device-width, initial-scale=1, maximum-scale=1.3')]`;
     const meta = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     if (!meta)
-        return 'задание 1: не выполнено. Не установлен метатег viewport с правильными значениями.';
-    else 
-        return 'задание 1: выполнено.';
+		return ['1 задание (метатег viewport с правильными значениями): не выполнено.', 'Не установлен метатег viewport с правильными значениями. (-10%)']
+	else
+		return ['1 задание (метатег viewport с правильными значениями): выполнено.', '10', '%',]
 }
 
-function checkCriterion2(){
+async function checkCriterion2() {
     const divs = getXPathResult(`//div`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     const bootstrap = getXPathResult(`//link[contains(@href, 'bootstrap.min.css')]`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var isCorrect = false;
@@ -27,16 +27,12 @@ function checkCriterion2(){
         }
     }
     if (!isCorrect || count === 0)
-        return 'задание 2: не выполнено. Используется не FlexBox.';
-    else 
-        return 'задание 2: выполнено.';
+		return ['2 задание (CSS-модуль FlexBox): не выполнено.', 'Используется не FlexBox. (-80%)']
+	else
+		return ['2 задание (CSS-модуль FlexBox): выполнено.', '80', '%',]
 }
 
-function checkCriterion3(){
-    return checkCriterion3Result()
-}
-
-async function checkCriterion3Result(){
+async function checkCriterion3() {
     const linkResult = document.styleSheets;
     var count = 0;
 
@@ -60,10 +56,11 @@ async function checkCriterion3Result(){
     }
 
     if (count < 2)
-        return 'задание 3: не выполнено. Нет медиа-запросов.';
-    else
-        return 'задание 3: выполнено.';
+		return ['3 задание (медиа-запросы): не выполнено.', 'Нет медиа-запросов. (-10%)']
+	else
+		return ['3 задание (медиа-запросы): выполнено.', '10', '%',]
 }
+
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -75,12 +72,18 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
-  }
-checkCriteria(checkCriterion1, checkCriterion2, checkCriterion3)
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
+}
+
+
+checkCriteria(
+	checkCriterion1,
+	checkCriterion2,
+	checkCriterion3
+);

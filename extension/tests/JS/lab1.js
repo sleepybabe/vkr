@@ -1,4 +1,4 @@
-function checkCriterion1() {
+async function checkCriterion1() {
 	const answer = getXPathResult(`//*[@id = 'answer']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const button = getXPathResult(`//button[@onclick='holiday();']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = false;
@@ -13,12 +13,12 @@ function checkCriterion1() {
         isCorrect = answerTextAfter === rightAnswer;
     }
     if (!isCorrect)
-		return "1 задание: не выполнено. Неправильно вставлено слово 'ДА!' или 'НЕТ!' в зависимости от текущего дня."
-	else 
-        return "1 задание: выполнено."
+		return ['1 задание (слово "ДА!" или "НЕТ!"): не выполнено.', 'Неправильно вставлено слово "ДА!" или "НЕТ!" в зависимости от текущего дня. (-50%)']
+	else
+		return ['1 задание (слово "ДА!" или "НЕТ!"): выполнено.', '50', '%',]
 }
 
-function checkCriterion2() {
+async function checkCriterion2() {
     const body = getXPathResult(`//body`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const button = getXPathResult(`//button[@onclick='holiday();']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = false;
@@ -33,12 +33,12 @@ function checkCriterion2() {
         isCorrect = bodyClass === rightAnswer;
     }
     if (!isCorrect)
-		return "2 задание: не выполнено. Неправильно установлен атрибут class для элемента body в зависимости от текущего дня."
-	else 
-        return "2 задание: выполнено."
+		return ['2 задание (атрибут class элемента body): не выполнено.', 'Неправильно установлен атрибут class для элемента body в зависимости от текущего дня. (-25%)']
+	else
+		return ['2 задание (атрибут class элемента body): выполнено.', '25', '%',]
 }
 
-function checkCriterion3() {
+async function checkCriterion3() {
 	const now = getXPathResult(`//*[@id = 'now']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const button = getXPathResult(`//button[@onclick='holiday();']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var isCorrect = false;
@@ -81,10 +81,11 @@ function checkCriterion3() {
         isCorrect = count === 5;
     }
     if (!isCorrect)
-		return "3 задание: не выполнено. Текущая дата не вставлена."
-	else 
-        return "3 задание: выполнено."
+		return ['3 задание (вставка текущей даты): не выполнено.', 'Текущая дата не вставлена. (-25%)']
+	else
+		return ['3 задание (вставка текущей даты): выполнено.', '25', '%',]
 }
+
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -96,16 +97,18 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
+
+
 checkCriteria(
-    checkCriterion1,
-    checkCriterion2,
-    checkCriterion3
+	checkCriterion1,
+	checkCriterion2,
+	checkCriterion3
 );

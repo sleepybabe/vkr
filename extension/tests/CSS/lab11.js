@@ -1,4 +1,4 @@
-function checkCriterion1() {
+async function checkCriterion1() {
     const divs = getXPathResult(`//div`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     const bootstrap = getXPathResult(`//link[contains(@href, 'bootstrap.min.css')]`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var isCorrect = false;
@@ -15,10 +15,11 @@ function checkCriterion1() {
         }
     }
     if (!isCorrect)
-        return 'задание 1: не выполнено. Используется не резиновая блочная верстка.';
-    else 
-        return 'задание 1: выполнено.';
+		return ['1 задание (блочная верстка): не выполнено.', 'Используется не резиновая блочная верстка. (-100%)']
+	else
+		return ['1 задание (блочная верстка): выполнено.', '100', '%',]
 }
+
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -30,12 +31,16 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
-checkCriteria(checkCriterion1)
+
+
+checkCriteria(
+	checkCriterion1
+);

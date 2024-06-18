@@ -1,4 +1,4 @@
-function checkCriterion1(){
+async function checkCriterion1() {
     const divs = getXPathResult(`//div`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     const bootstrap = getXPathResult(`//link[contains(@href, 'bootstrap.min.css')]`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var isCorrect = false;
@@ -16,19 +16,20 @@ function checkCriterion1(){
         }
     }
     if (!isCorrect)
-        return 'задание 1: не выполнено. Используется не Bootstrap.';
-    else 
-        return 'задание 1: выполнено.';
+		return ['1 задание (верстка на Bootstrap): не выполнено.', 'Используется не Bootstrap. (-90%)']
+	else
+		return ['1 задание (верстка на Bootstrap): выполнено.', '90', '%',]
 }
 
-function checkCriterion2(){
+async function checkCriterion2() {
     const xpath = `//meta[@name = 'viewport' and contains(@content, 'width=device-width') and contains(@content, 'initial-scale=1')]`;
     const linkResult = getXPathResult(xpath, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     if (linkResult.snapshotLength < 1)
-        return 'задание 2: не выполнено. Не установлены значения параметров метатега viewport согласно требованиям Bootstrap.';
-    else 
-        return 'задание 2: выполнено.';
+		return ['2 задание (параметры метатега viewport): не выполнено.', 'Не установлены значения параметров метатега viewport согласно требованиям Bootstrap. (-10%)']
+	else
+		return ['2 задание (параметры метатега viewport): выполнено.', '10', '%',]
 }
+
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -40,12 +41,17 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
-  }
-checkCriteria(checkCriterion1, checkCriterion2)
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
+}
+
+
+checkCriteria(
+	checkCriterion1,
+	checkCriterion2
+);

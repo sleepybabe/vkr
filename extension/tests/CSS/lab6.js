@@ -1,4 +1,4 @@
-function checkCriterion1() {
+async function checkCriterion1() {
     const aHttp = getXPathResult(`//a[starts-with(@href,'http://')]`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var isCorrect = false;
     for (var i = 0; i < aHttp.snapshotLength; i++) {
@@ -11,12 +11,12 @@ function checkCriterion1() {
         else isCorrect = true;
     }
     if (!isCorrect)
-        return 'задание 1: не выполнено. Абсолютные ссылки не выводятся жирным шрифтом без подчеркивания';
-    else 
-        return 'задание 1: выполнено.';
+		return ['1 задание (абсолютные ссылки): не выполнено.', 'Абсолютные ссылки не выводятся жирным шрифтом без подчеркивания. (-30%)']
+	else
+		return ['1 задание (абсолютные ссылки): выполнено.', '30', '%',]
 }
 
-function checkCriterion2() {
+async function checkCriterion2() {
     const aMathIsu = getXPathResult(`//a[starts-with(@href, 'http://math.isu.ru')]`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var isCorrect = false;
     for (var i = 0; i < aMathIsu.snapshotLength; i++) {
@@ -53,16 +53,12 @@ function checkCriterion2() {
     }
 
     if (!isCorrect)
-        return 'задание 2: не выполнено. Ссылки неправильного цвета';
-    else 
-        return 'задание 2: выполнено.';
+		return ['2 задание (цветные ссылки): не выполнено.', 'Ссылки неправильного цвета. (-40%)']
+	else
+		return ['2 задание (цветные ссылки): выполнено.', '40', '%',]
 }
 
-function checkCriterion3(){
-    return checkCriterion3Result()
-}
-
-async function checkCriterion3Result(){
+async function checkCriterion3() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     var hasSymbol = false;
 
@@ -86,10 +82,11 @@ async function checkCriterion3Result(){
         styleElement.remove();
     }
     if (!hasSymbol)
-        return 'задание 3: не выполнено. Не установлен с помощью универсального селектора шрифт Arial.';
-    else 
-        return 'задание 3: выполнено.';
+		return ['3 задание (шрифт Arial): не выполнено.', 'Не установлен с помощью универсального селектора шрифт Arial. (-30%)']
+	else
+		return ['3 задание (шрифт Arial): выполнено.', '30', '%',]
 }
+
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -101,12 +98,18 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
-checkCriteria(checkCriterion1, checkCriterion2, checkCriterion3)
+
+
+checkCriteria(
+	checkCriterion1,
+	checkCriterion2,
+	checkCriterion3
+);

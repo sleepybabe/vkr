@@ -1,8 +1,4 @@
-function checkCriterion1(){
-    return checkCriterion1Result()
-}
-
-async function checkCriterion1Result(){
+async function checkCriterion1() {
     const turtlesBefore = document.querySelectorAll('.turtle');
     var isCorrect = false;
     var numberScrolls = 5;
@@ -15,10 +11,11 @@ async function checkCriterion1Result(){
         isCorrect = true;
     }
     if (!isCorrect)
-        return '1 задание: не выполнено. Не добавляется черепаха при прокрутке страницы вниз.';
-    else 
-        return '1 задание: выполнено.';
+		return ['1 задание (бесконечно-прокручивающиеся черепахи): не выполнено.', 'Не добавляется черепаха при прокрутке страницы вниз. (-100%)']
+	else
+		return ['1 задание (бесконечно-прокручивающиеся черепахи): выполнено.', '100', '%',]
 }
+
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -30,12 +27,16 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
-checkCriteria(checkCriterion1)
+
+
+checkCriteria(
+	checkCriterion1
+);

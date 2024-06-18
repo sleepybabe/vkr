@@ -1,4 +1,4 @@
-function checkCriterion1() {
+async function checkCriterion1() {
     const body = getXPathResult(`//body`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const computedStyleBody = window.getComputedStyle(body);
     const backgroundColor = computedStyleBody.backgroundColor;
@@ -6,42 +6,15 @@ function checkCriterion1() {
     const hasBackgroundColor = backgroundColor && backgroundColor !== 'rgba(0, 0, 0, 0)';
     const hasBackgroundImage = backgroundImage && backgroundImage !== 'none';
     if (!hasBackgroundColor || !hasBackgroundImage) 
-        return 'задание 1: не выполнено. Не установлены фоновый цвет и фоновое изображение.';
-    else 
-        return 'задание 1: выполнено.';
+		return ['1 задание (фоновый цвет и фоновое изображение): не выполнено.', 'Не установлены фоновый цвет и фоновое изображение. (-14%)']
+	else
+		return ['1 задание (фоновый цвет и фоновое изображение): выполнено.', '14', '%',]
 }
 
-function checkCriterion2(){
-    const xpathResult = getXPathResult('//h1 | //section', XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
-    var hasEverything = false;
-    for (var i = 0; i < xpathResult.snapshotLength; i++) {
-        const element = xpathResult.snapshotItem(i);
-        const computedStyle = window.getComputedStyle(element);
-        const fontFamily = computedStyle.fontFamily.toLowerCase().includes('garamond');
-        const fontStyle = computedStyle.fontStyle === 'oblique' || computedStyle.fontStyle === 'italic';
-        const fontWeight = computedStyle.fontWeight === '600';
-        const fontSize = computedStyle.fontSize === '23px';
-        const textAlign = computedStyle.textAlign === 'center';
-        const color = computedStyle.color && computedStyle.color !== 'rgba(0, 0, 0, 0)'
-        if (fontFamily && fontStyle && fontWeight && fontSize && textAlign && color)
-            hasEverything = true;
-        else {
-            hasEverything = false;
-            break;
-        }
-    }
-    if (!hasEverything) 
-        return 'задание 2: не выполнено. Не установлено оформление заголовка первого уровня и основного текста согласно варианту';
-    else 
-        return 'задание 2: выполнено.';
+async function checkCriterion2() {
+	return checkVariantCriterion2();
 }
-
-
-function checkCriterion3(){
-    return checkCriterion3Result()
-}
-
-async function checkCriterion3Result(){
+async function checkCriterion3() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var hasNavRule = false;
 
@@ -87,16 +60,12 @@ async function checkCriterion3Result(){
             break;
     }
     if (!hasNavRule)
-        return 'задание 3: не выполнено. Не установлено оформление навигации (элемент nav).';
-    else 
-        return 'задание 3: выполнено.';
+		return ['3 задание (оформление навигации): не выполнено.', 'Не установлено оформление навигации (элемент nav). (-14%)']
+	else
+		return ['3 задание (оформление навигации): выполнено.', '14', '%',]
 }
 
-function checkCriterion4(){
-    return checkCriterion4Result()
-}
-
-async function checkCriterion4Result(){
+async function checkCriterion4() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var hasHeaderRule = false;
 
@@ -142,16 +111,12 @@ async function checkCriterion4Result(){
             break;
     }
     if (!hasHeaderRule)
-        return 'задание 4: не выполнено. Не установлено оформление шапки (элемент header).';
-    else 
-        return 'задание 4: выполнено.';
+		return ['4 задание (оформление шапки): не выполнено.', 'Не установлено оформление шапки (элемент header). (-14%)']
+	else
+		return ['4 задание (оформление шапки): выполнено.', '14', '%',]
 }
 
-function checkCriterion5(){
-    return checkCriterion5Result()
-}
-
-async function checkCriterion5Result(){
+async function checkCriterion5() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var hasFooterRule = false;
 
@@ -197,16 +162,12 @@ async function checkCriterion5Result(){
             break;
     }
     if (!hasFooterRule)
-        return 'задание 5: не выполнено. Не установлено оформление подвала (элемент footer).';
-    else 
-        return 'задание 5: выполнено.';
+		return ['5 задание (оформление подвала): не выполнено.', 'Не установлено оформление подвала (элемент footer). (-14%)']
+	else
+		return ['5 задание (оформление подвала): выполнено.', '14', '%',]
 }
 
-function checkCriterion6(){
-    return checkCriterion6Result()
-}
-
-async function checkCriterion6Result(){
+async function checkCriterion6() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     const selectorsToCheck = {
         nav: false,
@@ -265,16 +226,12 @@ async function checkCriterion6Result(){
             break;
     }
     if (!allSelectorsHidden)
-        return 'задание 6: не выполнено. В печатной версии не должны отображаться навигация (элемент nav), шапка (элемент header) и подвал документа (элемент footer).';
-    else 
-        return 'задание 6: выполнено.';
+		return ['6 задание (элемент nav, header, footer в печати): не выполнено.', 'В печатной версии не должны отображаться навигация (элемент nav), шапка (элемент header) и подвал документа (элемент footer). (-14%)']
+	else
+		return ['6 задание (элемент nav, header, footer в печати): выполнено.', '14', '%',]
 }
 
-function checkCriterion7(){
-    return checkCriterion7Result()
-}
-
-async function checkCriterion7Result(){
+async function checkCriterion7() {
     const linkResult = getXPathResult(`//link[@rel = 'stylesheet']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
     var isBnW = false;
     const whiteColors = [
@@ -344,10 +301,11 @@ async function checkCriterion7Result(){
             break;
     }
     if (!isBnW)
-        return 'задание 7: не выполнено. Оформление печатной версии должно быть выполнено в черно-белой гамме.';
-    else 
-        return 'задание 7: выполнено.';
+		return ['7 задание (черно-белая гамма в печати): не выполнено.', 'Оформление печатной версии должно быть выполнено в черно-белой гамме. (-14%)']
+	else
+		return ['7 задание (черно-белая гамма в печати): выполнено.', '14', '%',]
 }
+
 
 function getXPathResult(xpath, XPathResult){
     const evaluator = new XPathEvaluator();
@@ -359,12 +317,22 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
-checkCriteria(checkCriterion1, checkCriterion2, checkCriterion3, checkCriterion4, checkCriterion5, checkCriterion6, checkCriterion7)
+
+
+checkCriteria(
+	checkCriterion1,
+	checkCriterion2,
+	checkCriterion3,
+	checkCriterion4,
+	checkCriterion5,
+	checkCriterion6,
+	checkCriterion7
+);

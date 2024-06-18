@@ -1,4 +1,4 @@
-function checkCriterion1() {
+async function checkCriterion1() {
     const answer = getXPathResult(`//*[@id = 'answer']`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const button = getXPathResult(`//button[contains(@onclick,'convert()')]`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE).snapshotItem(0);
     const selectArray = getXPathResult(`//select`, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
@@ -38,9 +38,9 @@ function checkCriterion1() {
         }
     }
     if (!isCorrect)
-		return "1 задание: не выполнено. Неправильно выведенное число при конвертации единиц измерения."
-	else 
-        return "1 задание: выполнено."
+		return ['1 задание (функция convert()): не выполнено.', 'Неправильно выведенное число при конвертации единиц измерения. (-100%)']
+	else
+		return ['1 задание (функция convert()): выполнено.', '100', '%',]
 }
 
 
@@ -54,12 +54,16 @@ function getXPathResult(xpath, XPathResult){
     return result;
 }
 
-async function checkCriteria(...functions){
+async function checkCriteria(...functions) {
     var arrayOfResults = [];
-    for (i = 0; i < functions.length; i++) {
+    for (var i = 0; i < functions.length; i++) {
         const tmp = await functions[i]();
         arrayOfResults.push(tmp);
     }
-    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults});
+    chrome.runtime.sendMessage({ action: "showResult", arrayOfResults: arrayOfResults });
 }
-checkCriteria(checkCriterion1)
+
+
+checkCriteria(
+	checkCriterion1
+);

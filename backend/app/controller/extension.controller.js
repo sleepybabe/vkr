@@ -57,7 +57,7 @@ exports.download = (req, res) => {
                     const variantFunctionName = `checkVariantCriterion${index}`;
                     const variantFunctionCode = `async function ${variantFunctionName}() ${codeInFunction}`;
                     const variantFileName = `tests/${moduleLab}/variants/lab${labId}/variant${indexVariant}.js`;
-                    functionCode = `async function ${functionName}() {\n\t${variantFunctionName}();\n}`;
+                    functionCode = `async function ${functionName}() {\n\treturn ${variantFunctionName}();\n}`;
                     const variantCode = `${variantFunctionCode}`;
                     archive.append(variantCode, { name: variantFileName });
                 } else {
